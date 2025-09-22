@@ -13,7 +13,7 @@ class SplashScreen: ViewModel() {
 
     init {
         viewModelScope.launch{
-            delay(3000L)
+            delay(4000L)
             _isReady.value = true
         }
     }
