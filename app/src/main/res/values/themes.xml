@@ -6,10 +6,4 @@
     </style>
 
     <style name="Theme.Kosongan" parent="Base.Theme.Kosongan" />
-
-    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/black</item>
-        <item name="postSplashScreenTheme">@style/Theme.Kosongan</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/animated_logo</item>
-    </style>
 </resources>
