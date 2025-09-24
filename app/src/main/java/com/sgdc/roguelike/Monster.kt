@@ -14,19 +14,4 @@ class Monster (health:Int,
         if (health < 0) health = 0
     }
 
-    fun getAtt(): Int {
-        return this.att
-    }
-
-    fun getHealth(): Int{
-        return this.health
-    }
-
-    fun getMaxHeatlh(): Int{
-        return this.maxHealth
-    }
-
-    fun getDef(): Int{
-        return this.def
-    }
 }

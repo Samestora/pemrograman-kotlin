@@ -52,29 +52,4 @@ class Player (health: Int,
         }
     }
 
-    fun getAtt(): Int {
-        return this.att
-    }
-
-    fun getHealth(): Int{
-        return this.health
-    }
-
-    fun getMaxHeatlh(): Int{
-        return this.maxHealth
-    }
-
-    fun getDef(): Int{
-        return this.def
-    }
-
-    fun getMana():Int{
-        return this.mana
-    }
-
-    fun getMaxMana(): Int{
-        return this.maxMana
-    }
-
-
 }
