@@ -1,32 +1,80 @@
 package com.sgdc.roguelike
 
-class Player (){
-    var health: Int = 0
-    var maxHealth : Int = 0
-    var att : Int = 0
-    var def : Int = 0
-    var exp : Float = 0.0f
-    var maxExp : Float = 0.0f
-    var level: Int = 1
+class Player (health: Int,
+              maxHealth: Int,
+              att: Int,
+              def: Int,
+    mana:Int) : Character(health, maxHealth, att, def){
 
-    constructor(health:Int,maxHealth:Int, att:Int, def:Int, exp:Float, maxExp:Float, level:Int):this(){
-        this.exp = exp
+    var mana:Int = mana
+
+    var maxMana:Int = mana
+
+    val skills = mutableListOf<Skill>()
+
+    constructor(health:Int,
+                maxHealth:Int,
+                att:Int,
+                def:Int,
+        mana:Int,
+        maxMana:Int):
+            this(health, maxHealth, att, def, mana){
         this.att = att
         this.def = def
         this.health = health
         this.maxHealth = maxHealth
-        this.maxExp = maxExp
-        this.level = level
-    }
-    constructor(health:Int, att:Int, def:Int):this(){
-        this.health = health
-        this.att = att
-        this.def = def
+        this.mana = mana
+        this.maxMana = maxMana
     }
 
-    fun levelUp(){
-        this.exp = 0.0f
-        this.level += 1
-        this.maxExp = (this.maxExp * 1.25f).toFloat()
+    override fun attack(target: Character) {
+        val damage = (this.att - target.def).coerceAtLeast(1)
+        target.takeDamage(damage)
     }
+
+    override fun takeDamage(damage: Int) {
+        health -= damage
+        if (health < 0) health = 0
+    }
+
+    fun addSkill(skill: Skill) {
+        skills.add(skill)
+    }
+
+    fun removeSkill (skill: Skill){
+        skills.remove(skill)
+    }
+
+    fun useSkill(index: Int, target: Character) {
+        if (index in skills.indices) {
+            val skill = skills[index]
+            skill.use(this, target)
+        }
+    }
+
+    fun getAtt(): Int {
+        return this.att
+    }
+
+    fun getHealth(): Int{
+        return this.health
+    }
+
+    fun getMaxHeatlh(): Int{
+        return this.maxHealth
+    }
+
+    fun getDef(): Int{
+        return this.def
+    }
+
+    fun getMana():Int{
+        return this.mana
+    }
+
+    fun getMaxMana(): Int{
+        return this.maxMana
+    }
+
+
 }
