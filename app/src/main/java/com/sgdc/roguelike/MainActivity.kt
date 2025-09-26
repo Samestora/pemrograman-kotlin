@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
             val fragment = when (screen) {
                 Screen.Menu -> MenuFragment()
                 Screen.Battle -> BattleFragment()
+                Screen.Rest -> RestFragment()
+                Screen.Death -> DeathFragment()
                 Screen.Settings -> SettingsFragment()
             }
 

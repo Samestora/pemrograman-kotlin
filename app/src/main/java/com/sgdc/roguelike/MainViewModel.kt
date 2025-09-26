@@ -24,5 +24,5 @@ class MainViewModel : ViewModel() {
 }
 
 enum class Screen {
-    Menu, Battle, Settings
+    Menu, Battle, Settings, Rest, Death
 }

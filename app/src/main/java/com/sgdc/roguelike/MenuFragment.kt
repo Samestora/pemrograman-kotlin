@@ -22,8 +22,8 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<ImageButton>(R.id.playGameButton).setOnClickListener {
-            viewModel.navigateTo(Screen.Battle)
+        view.findViewById<ImageButton>(R.id.newGameButton).setOnClickListener {
+            viewModel.navigateTo(Screen.Rest)
         }
 
         view.findViewById<ImageButton>(R.id.settingImageButton).setOnClickListener {
