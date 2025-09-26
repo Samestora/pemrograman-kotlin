@@ -23,6 +23,8 @@ class MenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<ImageButton>(R.id.newGameButton).setOnClickListener {
+            SfxManager.play("play")
+            MusicManager.stop("main_menu")
             viewModel.navigateTo(Screen.Rest)
         }
 
