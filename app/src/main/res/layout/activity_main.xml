@@ -7,93 +7,9 @@
                                                    android:layout_height="match_parent"
                                                    tools:context=".MainActivity">
 
-    <!-- Play Game -->
-    <FrameLayout
-        android:id="@+id/playGame"
-        android:layout_width="150dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/settingButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="1.0">
-
-        <ImageButton
-            android:id="@+id/playGameButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/textured_button"/>
-
-        <TextView
-            android:id="@+id/playGameText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="New Game"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-    </FrameLayout>
-
-    <!-- Setting -->
-    <FrameLayout
-        android:id="@+id/settingButton"
-        android:layout_width="150dp"
-        android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <ImageButton
-            android:id="@+id/settingImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/textured_button"/>
-
-        <TextView
-            android:id="@+id/settingText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Setting"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-    </FrameLayout>
-
-    <!-- Exit Game -->
-    <FrameLayout
-        android:id="@+id/exitButton"
-        android:layout_width="150dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingButton" app:layout_constraintVertical_bias="0.0">
-
-        <ImageButton
-            android:id="@+id/exitImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/textured_button"/>
-
-        <TextView
-            android:id="@+id/exitText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Exit Game"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-    </FrameLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

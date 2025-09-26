@@ -9,21 +9,37 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel by viewModels<SplashScreen>()
+
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Splash screen API
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-            setKeepOnScreenCondition {
-                !viewModel.isReady.value
-            }
+
+        splashScreen.setKeepOnScreenCondition {
+            viewModel.isReady.value == false
         }
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
+
+        // Observe navigation
+        viewModel.currentScreen.observe(this) { screen ->
+            val fragment = when (screen) {
+                Screen.Menu -> MenuFragment()
+                Screen.Battle -> BattleFragment()
+                Screen.Settings -> SettingsFragment()
+            }
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .commit()
+        }
+
+        // Simulate loading work (you can replace this with real init)
+        window.decorView.postDelayed({
+            viewModel.finishLoading()
+        }, 1500)
     }
 }
