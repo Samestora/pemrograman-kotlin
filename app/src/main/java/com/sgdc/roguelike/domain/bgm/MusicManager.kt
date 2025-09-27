@@ -50,4 +50,12 @@ object MusicManager : Sound {
     override fun resume() {
         mediaPlayer?.start()
     }
+
+    override fun mute() {
+        mediaPlayer?.setVolume(0f,0f)
+    }
+
+    override fun unMute() {
+        mediaPlayer?.setVolume(1f,1f)
+    }
 }

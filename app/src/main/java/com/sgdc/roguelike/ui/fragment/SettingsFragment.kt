@@ -44,9 +44,9 @@ class SettingsFragment : Fragment() {
             SettingsManager.setMusicEnabled(requireContext(), isChecked)
             MusicManager.muted = !isChecked
             if (isChecked) {
-                MusicManager.play("main_menu")
+                MusicManager.unMute()
             } else {
-                MusicManager.stop()
+                MusicManager.mute()
             }
         }
 

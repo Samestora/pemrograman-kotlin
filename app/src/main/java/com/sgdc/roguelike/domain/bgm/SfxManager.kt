@@ -53,4 +53,12 @@ object SfxManager : Sound {
     override fun resume() {
         soundPool.autoResume()
     }
+
+    override fun mute() {
+        // Nothing
+    }
+
+    override fun unMute() {
+        // Nothing
+    }
 }
