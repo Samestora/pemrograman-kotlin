@@ -5,13 +5,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.GachaFragment">
 
-    <TextView
-        android:id="@+id/tvGachaResult"
-        android:text="Ready?"
-        android:textSize="22sp"
-        android:padding="16dp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvGachaResult"
+            android:text="Ready?"
+            android:textSize="22sp"
+            android:padding="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:text="OK"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </FrameLayout>

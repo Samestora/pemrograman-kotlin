@@ -14,6 +14,7 @@ import com.sgdc.roguelike.R
 import com.sgdc.roguelike.ui.viewmodel.Screen
 import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.ui.fragment.BattleFragment
+import com.sgdc.roguelike.ui.fragment.GachaFragment
 import com.sgdc.roguelike.ui.fragment.MenuFragment
 import com.sgdc.roguelike.ui.fragment.RestFragment
 import com.sgdc.roguelike.ui.fragment.SettingsFragment
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 Screen.Rest -> RestFragment()
                 Screen.Death -> DeathFragment()
                 Screen.Settings -> SettingsFragment()
+                Screen.Gacha -> GachaFragment()
             }
 
             supportFragmentManager.beginTransaction()

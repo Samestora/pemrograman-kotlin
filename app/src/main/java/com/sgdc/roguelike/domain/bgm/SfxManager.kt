@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
 import com.sgdc.roguelike.R
-import com.sgdc.roguelike.domain.bgm.MusicManager.mediaPlayer
 import com.sgdc.roguelike.domain.bgm.Sound
 import com.sgdc.roguelike.domain.setting.SettingsManager
 

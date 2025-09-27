@@ -7,6 +7,7 @@ import com.sgdc.roguelike.domain.character.Monster
 import com.sgdc.roguelike.domain.character.Player
 import com.sgdc.roguelike.domain.skill.Skill
 import com.sgdc.roguelike.domain.skill.SkillRegistry
+import kotlin.collections.plusAssign
 import kotlin.reflect.KClass
 
 class GameViewModel : ViewModel() {
@@ -81,5 +82,26 @@ class GameViewModel : ViewModel() {
             _player.value = player
         }
         return newSkill
+    }
+
+    fun gachaStat(stat: String, amount: Int) {
+        when (stat) {
+            "attack" -> _player.value?.let{ player ->
+                player.att += amount
+                _player.value = player
+            }
+            "maxHealth" -> _player.value?.let{ player ->
+                player.maxHealth += amount
+                _player.value = player
+            }
+            "maxMana" -> _player.value?.let{ player ->
+                player.maxMana += amount
+                _player.value = player
+            }
+            "defence" -> _player.value?.let{ player ->
+                player.def += amount
+                _player.value = player
+            }
+        }
     }
 }
