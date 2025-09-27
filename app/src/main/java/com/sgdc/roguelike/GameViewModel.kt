@@ -3,10 +3,11 @@ package com.sgdc.roguelike
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlin.reflect.KClass
 
 class GameViewModel : ViewModel() {
     private val _player = MutableLiveData(
-        Player(100, 100, 10, 5, 20, 20)
+        Player(50, 100, 10, 5, 20, 20)
     )
     val player: LiveData<Player> = _player
 
@@ -39,12 +40,43 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    fun playerHeal(amount: Int) {
+    fun <T : Skill> playerAddSkill(skillClass: KClass<T>) {
         _player.value?.let { player ->
-            player.health = (player.health + amount).coerceAtMost(player.maxHealth)
-            _player.value = player // trigger LiveData update
+            val skill = skillClass.constructors.first().call() // create instance
+            player.addSkill(skill)
+            _player.value = player // trigger observers
         }
     }
 
+
+    //    TODO make generic playerUseSkill(SkillName) instead it should be a query => { it is SkillName }
+    //      Can only be used from player to player DONT TOUCH!!!!!
+    fun <T : Skill> playerUseSkill(skillClass: KClass<T>) {
+        _player.value?.let { player ->
+            val skill = player.skills.firstOrNull { skillClass.isInstance(it) }
+            if (skill != null) {
+                (skill as T).use(player, player)
+                _player.value = player
+            } else {
+                println("Player does not have skill: ${skillClass.simpleName}")
+            }
+        }
+    }
+
+    fun playerRest() {
+        _player.value?.let { player ->
+            player.health += 20
+            _player.value = player
+        }
+    }
+
+    fun grantRandomSkill(): Skill {
+        val newSkill = SkillRegistry.randomSkill()
+        _player.value?.let { player ->
+            player.addSkill(newSkill)
+            _player.value = player
+        }
+        return newSkill
+    }
 }
 
