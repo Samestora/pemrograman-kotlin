@@ -27,6 +27,8 @@ class RestFragment : Fragment() {
         // Show player stats after rest
         val restStatBonus = view.findViewById<TextView>(R.id.restStatBonus)
         val restSkillGain = view.findViewById<TextView>(R.id.restSkillGain)
+
+        gameViewModel.playerRest()
         val newSkill = gameViewModel.grantRandomSkill()
 
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
@@ -36,8 +38,6 @@ class RestFragment : Fragment() {
 
         // Handle "Next Stage"
         view.findViewById<ImageButton>(R.id.nextStageButton).setOnClickListener {
-            // Heal player when rest
-            gameViewModel.playerRest()
             gameViewModel.resetBattle()
             mainViewModel.navigateTo(Screen.Battle)
         }
