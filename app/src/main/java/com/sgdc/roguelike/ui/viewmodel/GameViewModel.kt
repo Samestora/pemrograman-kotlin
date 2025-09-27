@@ -1,8 +1,12 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.sgdc.roguelike.domain.character.Monster
+import com.sgdc.roguelike.domain.character.Player
+import com.sgdc.roguelike.domain.skill.Skill
+import com.sgdc.roguelike.domain.skill.SkillRegistry
 import kotlin.reflect.KClass
 
 class GameViewModel : ViewModel() {
@@ -79,4 +83,3 @@ class GameViewModel : ViewModel() {
         return newSkill
     }
 }
-

@@ -1,4 +1,4 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.ui.fragment
 
 import androidx.fragment.app.Fragment
 

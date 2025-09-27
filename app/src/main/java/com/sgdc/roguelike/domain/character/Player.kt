@@ -1,4 +1,6 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.domain.character
+
+import com.sgdc.roguelike.domain.skill.Skill
 
 class Player (health: Int,
               maxHealth: Int,

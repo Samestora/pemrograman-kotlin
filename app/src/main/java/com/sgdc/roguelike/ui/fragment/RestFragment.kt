@@ -1,4 +1,4 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,10 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.sgdc.roguelike.ui.viewmodel.GameViewModel
+import com.sgdc.roguelike.ui.viewmodel.MainViewModel
+import com.sgdc.roguelike.R
+import com.sgdc.roguelike.ui.viewmodel.Screen
 
 class RestFragment : Fragment() {
 
@@ -43,4 +47,3 @@ class RestFragment : Fragment() {
         }
     }
 }
-

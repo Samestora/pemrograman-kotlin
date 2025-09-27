@@ -1,7 +1,10 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.domain.bgm
 
 import android.content.Context
 import android.media.MediaPlayer
+import com.sgdc.roguelike.App
+import com.sgdc.roguelike.R
+import com.sgdc.roguelike.domain.bgm.Sound
 
 object MusicManager : Sound {
     private var mediaPlayer: MediaPlayer? = null
@@ -20,7 +23,7 @@ object MusicManager : Sound {
 
         stop()
         val resId = musicMap[name] ?: return
-        mediaPlayer = MediaPlayer.create(App.context, resId)
+        mediaPlayer = MediaPlayer.create(App.Companion.context, resId)
         mediaPlayer?.isLooping = true
         mediaPlayer?.start()
         currentMusic = name

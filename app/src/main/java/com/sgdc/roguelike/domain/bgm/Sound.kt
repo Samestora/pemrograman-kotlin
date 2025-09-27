@@ -1,4 +1,4 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.domain.bgm
 
 import android.content.Context
 

@@ -1,6 +1,4 @@
-package com.sgdc.roguelike
-
-import kotlin.reflect.KClass
+package com.sgdc.roguelike.domain.skill
 
 object SkillRegistry {
     private val skills: List<() -> Skill> = listOf(

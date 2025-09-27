@@ -1,9 +1,10 @@
-package com.sgdc.roguelike
-
+package com.sgdc.roguelike.domain.bgm
 
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
+import com.sgdc.roguelike.R
+import com.sgdc.roguelike.domain.bgm.Sound
 
 object SfxManager : Sound {
     private lateinit var soundPool: SoundPool
@@ -51,4 +52,3 @@ object SfxManager : Sound {
         soundPool.autoResume()
     }
 }
-

@@ -1,13 +1,22 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.ui.activity
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.sgdc.roguelike.ui.fragment.DeathFragment
+import com.sgdc.roguelike.ui.viewmodel.MainViewModel
+import com.sgdc.roguelike.domain.bgm.MusicManager
+import com.sgdc.roguelike.R
+import com.sgdc.roguelike.ui.viewmodel.Screen
+import com.sgdc.roguelike.domain.bgm.SfxManager
+import com.sgdc.roguelike.ui.fragment.BattleFragment
+import com.sgdc.roguelike.ui.fragment.MenuFragment
+import com.sgdc.roguelike.ui.fragment.RestFragment
+import com.sgdc.roguelike.ui.fragment.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,12 +1,13 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.ui.fragment
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.sgdc.roguelike.ui.viewmodel.GameViewModel
+import com.sgdc.roguelike.R
 
 class BattleFragment : Fragment() {
 

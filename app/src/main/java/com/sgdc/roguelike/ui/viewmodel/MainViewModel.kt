@@ -1,4 +1,4 @@
-package com.sgdc.roguelike;
+package com.sgdc.roguelike.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

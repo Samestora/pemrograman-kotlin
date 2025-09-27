@@ -1,4 +1,4 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.domain.character
 
 class Monster (health:Int,
                att:Int,

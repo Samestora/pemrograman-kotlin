@@ -1,4 +1,7 @@
-package com.sgdc.roguelike
+package com.sgdc.roguelike.domain.skill
+
+import com.sgdc.roguelike.domain.character.Character
+import com.sgdc.roguelike.domain.character.Player
 
 interface Skill {
     val name: String
