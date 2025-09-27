@@ -40,16 +40,17 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    fun playerAddSkill() {
+    fun <T : Skill> playerAddSkill(skillClass: KClass<T>) {
         _player.value?.let { player ->
-            player.addSkill(Heal())
-
-            _player.value = player
+            val skill = skillClass.constructors.first().call() // create instance
+            player.addSkill(skill)
+            _player.value = player // trigger observers
         }
     }
 
+
     //    TODO make generic playerUseSkill(SkillName) instead it should be a query => { it is SkillName }
-    //  DONT TOUCH!!!!!
+    //      Can only be used from player to player DONT TOUCH!!!!!
     fun <T : Skill> playerUseSkill(skillClass: KClass<T>) {
         _player.value?.let { player ->
             val skill = player.skills.firstOrNull { skillClass.isInstance(it) }
@@ -62,6 +63,20 @@ class GameViewModel : ViewModel() {
         }
     }
 
+    fun playerRest() {
+        _player.value?.let { player ->
+            player.health += 20
+            _player.value = player
+        }
+    }
 
+    fun grantRandomSkill(): Skill {
+        val newSkill = SkillRegistry.randomSkill()
+        _player.value?.let { player ->
+            player.addSkill(newSkill)
+            _player.value = player
+        }
+        return newSkill
+    }
 }
 

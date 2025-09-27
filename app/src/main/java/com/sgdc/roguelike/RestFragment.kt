@@ -24,18 +24,20 @@ class RestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Heal the player when they rest
-        gameViewModel.playerAddSkill()
-        gameViewModel.playerUseSkill(Heal::class)
-
         // Show player stats after rest
-        val bonusText = view.findViewById<TextView>(R.id.restStatBonus)
+        val restStatBonus = view.findViewById<TextView>(R.id.restStatBonus)
+        val restSkillGain = view.findViewById<TextView>(R.id.restSkillGain)
+        val newSkill = gameViewModel.grantRandomSkill()
+
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            bonusText.text = "You gain +20 HP (HP: ${player.health}/${player.maxHealth})"
+            restStatBonus.text = "You gain +20 HP \n (HP: ${player.health}/${player.maxHealth})"
+            restSkillGain.text = "You gained ${newSkill.name}!"
         }
 
         // Handle "Next Stage"
         view.findViewById<ImageButton>(R.id.nextStageButton).setOnClickListener {
+            // Heal player when rest
+            gameViewModel.playerRest()
             gameViewModel.resetBattle()
             mainViewModel.navigateTo(Screen.Battle)
         }
