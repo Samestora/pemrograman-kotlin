@@ -19,15 +19,19 @@ object MusicManager : Sound {
     }
 
     override fun play(name: String?) {
-        if (muted || name == null) return  // respect mute toggle
+        if (name == null) return
 
-        if (currentMusic == name && mediaPlayer?.isPlaying == true) return
+        if (currentMusic == name && mediaPlayer?.isPlaying == true) {
+            applyVolume()
+            return
+        }
 
         stop()
         val resId = musicMap[name] ?: return
         mediaPlayer = MediaPlayer.create(App.Companion.context, resId)
         mediaPlayer?.isLooping = true
         mediaPlayer?.start()
+        applyVolume()
         currentMusic = name
     }
 
@@ -51,11 +55,20 @@ object MusicManager : Sound {
         mediaPlayer?.start()
     }
 
+
     override fun mute() {
-        mediaPlayer?.setVolume(0f,0f)
+        muted = true
+        applyVolume()
     }
 
     override fun unMute() {
-        mediaPlayer?.setVolume(1f,1f)
+        muted = false
+        applyVolume()
+    }
+
+    // It can only be applied here, since apply volume in sfx needs soundId
+    private fun applyVolume() {
+        val vol = if (muted) 0f else 1f
+        mediaPlayer?.setVolume(vol, vol)
     }
 }
