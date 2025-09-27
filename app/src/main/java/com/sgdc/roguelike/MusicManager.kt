@@ -37,4 +37,12 @@ object MusicManager : Sound {
         mediaPlayer?.release()
         mediaPlayer = null
     }
+
+    override fun pause() {
+        mediaPlayer?.pause()
+    }
+
+    override fun resume() {
+        mediaPlayer?.start()
+    }
 }

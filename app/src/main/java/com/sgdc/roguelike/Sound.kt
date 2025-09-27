@@ -7,4 +7,8 @@ interface Sound {
     fun stop(name:String? = null)
     fun release()
     fun init(context: Context)
+
+    fun pause()
+
+    fun resume()
 }

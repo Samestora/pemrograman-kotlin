@@ -55,4 +55,16 @@ class MainActivity : AppCompatActivity() {
             MusicManager.play("main_menu")
         }, 4000)
     }
+
+    override fun onPause() {
+        super.onPause()
+        MusicManager.pause()
+        SfxManager.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MusicManager.resume()
+        SfxManager.resume()
+    }
 }

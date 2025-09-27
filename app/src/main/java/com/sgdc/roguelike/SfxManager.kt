@@ -43,4 +43,12 @@ object SfxManager : Sound {
     override fun release() {
         soundPool.release()
     }
+
+    override fun pause() {
+        soundPool.autoPause()
+    }
+
+    override fun resume() {
+        soundPool.autoResume()
+    }
 }
