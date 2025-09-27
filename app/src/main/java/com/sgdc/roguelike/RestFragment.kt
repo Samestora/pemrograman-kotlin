@@ -32,12 +32,12 @@ class RestFragment : Fragment() {
         val newSkill = gameViewModel.grantRandomSkill()
 
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            restStatBonus.text = "You gain +20 HP \n (HP: ${player.health}/${player.maxHealth})"
-            restSkillGain.text = "You gained ${newSkill.name}!"
+            restStatBonus?.text = getString(R.string.rest_heal_message, player.health, player.maxHealth)
+            restSkillGain?.text = getString(R.string.skill_gain_message, newSkill.name)
         }
 
         // Handle "Next Stage"
-        view.findViewById<ImageButton>(R.id.nextStageButton).setOnClickListener {
+        view.findViewById<ImageButton>(R.id.nextStageButton)?.setOnClickListener {
             gameViewModel.resetBattle()
             mainViewModel.navigateTo(Screen.Battle)
         }

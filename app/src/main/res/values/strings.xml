@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">kosongan</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rest_heal_message">You gain +20 HP \n (HP: %1$d/%2$d)</string>
+    <string name="skill_gain_message">You gained %1$s!</string>
 </resources>

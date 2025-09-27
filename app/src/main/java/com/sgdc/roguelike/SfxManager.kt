@@ -8,6 +8,7 @@ import android.media.SoundPool
 object SfxManager : Sound {
     private lateinit var soundPool: SoundPool
     private val soundMap = mutableMapOf<String, Int>()
+    var muted = false // <-- add this
 
     override fun init(context: Context) {
         val audioAttributes = AudioAttributes.Builder()
@@ -20,7 +21,6 @@ object SfxManager : Sound {
             .setAudioAttributes(audioAttributes)
             .build()
 
-
         soundMap["play"] = soundPool.load(context, R.raw.sfx_play_button, 1)
         soundMap["fireball"] = soundPool.load(context, R.raw.sfx_skill_fireball, 1)
         soundMap["slash"] = soundPool.load(context, R.raw.sfx_skill_slash, 1)
@@ -28,6 +28,7 @@ object SfxManager : Sound {
     }
 
     override fun play(name: String?) {
+        if (muted) return  // respect mute toggle
         name?.let {
             val soundId = soundMap[it]
             if (soundId != null) {
@@ -36,9 +37,7 @@ object SfxManager : Sound {
         }
     }
 
-    override fun stop(name: String?) {
-        // Do nothing
-    }
+    override fun stop(name: String?) { /* Optional */ }
 
     override fun release() {
         soundPool.release()
@@ -52,3 +51,4 @@ object SfxManager : Sound {
         soundPool.autoResume()
     }
 }
+

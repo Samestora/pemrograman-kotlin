@@ -31,10 +31,6 @@ class MenuFragment : Fragment() {
         view.findViewById<ImageButton>(R.id.settingImageButton).setOnClickListener {
             viewModel.navigateTo(Screen.Settings)
         }
-
-        view.findViewById<ImageButton>(R.id.exitImageButton).setOnClickListener {
-            requireActivity().finish()
-        }
     }
 }
 
