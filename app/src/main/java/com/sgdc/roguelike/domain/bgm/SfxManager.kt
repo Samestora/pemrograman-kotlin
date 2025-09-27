@@ -5,13 +5,15 @@ import android.media.AudioAttributes
 import android.media.SoundPool
 import com.sgdc.roguelike.R
 import com.sgdc.roguelike.domain.bgm.Sound
+import com.sgdc.roguelike.domain.setting.SettingsManager
 
 object SfxManager : Sound {
     private lateinit var soundPool: SoundPool
     private val soundMap = mutableMapOf<String, Int>()
-    var muted = false // <-- add this
+    var muted : Boolean = false // <-- add this
 
     override fun init(context: Context) {
+        muted = !SettingsManager.isSfxEnabled(context) // load saved state
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_GAME)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)

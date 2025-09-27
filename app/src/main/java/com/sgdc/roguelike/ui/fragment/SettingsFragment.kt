@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Switch
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
@@ -13,6 +14,7 @@ import com.sgdc.roguelike.domain.bgm.MusicManager
 import com.sgdc.roguelike.R
 import com.sgdc.roguelike.ui.viewmodel.Screen
 import com.sgdc.roguelike.domain.bgm.SfxManager
+import com.sgdc.roguelike.domain.setting.SettingsManager
 
 class SettingsFragment : Fragment() {
 
@@ -28,17 +30,34 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Switch>(R.id.musicToggle)?.setOnCheckedChangeListener { _, isChecked ->
+
+        val musicToggle = view.findViewById<Switch>(R.id.musicToggle)
+        val sfxToggle = view.findViewById<Switch>(R.id.sfxToggle)
+
+        // Load saved states
+        musicToggle.isChecked = SettingsManager.isMusicEnabled(requireContext())
+        sfxToggle.isChecked = SettingsManager.isSfxEnabled(requireContext())
+
+
+        // Music toggle
+        musicToggle.setOnCheckedChangeListener { _, isChecked ->
+            SettingsManager.setMusicEnabled(requireContext(), isChecked)
             MusicManager.muted = !isChecked
-            if (MusicManager.muted) {
-                MusicManager.stop()
+            if (isChecked) {
+                MusicManager.play("main_menu")
             } else {
-                MusicManager.play("main_menu") // or current screen’s music
+                MusicManager.stop()
             }
         }
 
-        view.findViewById<Switch>(R.id.sfxToggle)?.setOnCheckedChangeListener { _, isChecked ->
+        // SFX toggle
+        sfxToggle.setOnCheckedChangeListener { _, isChecked ->
+            SettingsManager.setSfxEnabled(requireContext(), isChecked)
             SfxManager.muted = !isChecked
+        }
+
+        view.findViewById<Button>(R.id.backToMenuButton)?.setOnClickListener {
+            viewModel.navigateTo(Screen.Menu)
         }
 
 

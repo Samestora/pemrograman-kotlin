@@ -5,14 +5,16 @@ import android.media.MediaPlayer
 import com.sgdc.roguelike.App
 import com.sgdc.roguelike.R
 import com.sgdc.roguelike.domain.bgm.Sound
+import com.sgdc.roguelike.domain.setting.SettingsManager
 
 object MusicManager : Sound {
     private var mediaPlayer: MediaPlayer? = null
     private val musicMap = mutableMapOf<String, Int>()
     private var currentMusic: String? = null
-    var muted = false // <-- add this
+    var muted : Boolean = false // <-- add this
 
     override fun init(context: Context) {
+        muted = !SettingsManager.isMusicEnabled(context)
         musicMap["main_menu"] = R.raw.main_menu
     }
 
