@@ -2,11 +2,12 @@ package com.sgdc.roguelike.domain.character
 
 import com.sgdc.roguelike.domain.skill.Skill
 
-class Player (health: Int,
+class Player (name: String,
+              health: Int,
               maxHealth: Int,
               att: Int,
               def: Int,
-    mana:Int) : Character(health, maxHealth, att, def){
+    mana:Int) : Character(name, health, maxHealth, att, def){
 
     var mana:Int = mana
 
@@ -14,19 +15,22 @@ class Player (health: Int,
 
     val skills = mutableListOf<Skill>()
 
-    constructor(health:Int,
+    constructor(
+        name: String,
+        health:Int,
                 maxHealth:Int,
                 att:Int,
                 def:Int,
         mana:Int,
         maxMana:Int):
-            this(health, maxHealth, att, def, mana){
-        this.att = att
-        this.def = def
-        this.health = health
-        this.maxHealth = maxHealth
-        this.mana = mana
-        this.maxMana = maxMana
+            this(name, health, maxHealth, att, def, mana){
+                this.name = name
+                this.att = att
+                this.def = def
+                this.health = health
+                this.maxHealth = maxHealth
+                this.mana = mana
+                this.maxMana = maxMana
     }
 
     override fun attack(target: Character) {

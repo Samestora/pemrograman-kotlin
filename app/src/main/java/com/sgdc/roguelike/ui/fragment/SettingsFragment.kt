@@ -1,12 +1,12 @@
 package com.sgdc.roguelike.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Switch
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
@@ -27,6 +27,8 @@ class SettingsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
+    // i use switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

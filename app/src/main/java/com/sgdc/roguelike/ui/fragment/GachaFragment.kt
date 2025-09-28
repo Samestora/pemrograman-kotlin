@@ -5,16 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.sgdc.roguelike.R
 import com.sgdc.roguelike.ui.viewmodel.GameViewModel
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
 import com.sgdc.roguelike.ui.viewmodel.Screen
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -22,38 +21,45 @@ import kotlin.getValue
 class GachaFragment : Fragment() {
 
     private lateinit var tvGachaResult: TextView
-    private lateinit var btnOk: Button
-    private val statList = listOf("attack", "maxHealth", "maxMana", "defence")
+    private lateinit var tvGachaTitle: TextView
+    private lateinit var nextStageButton: ImageButton
+    private lateinit var btnOk: FrameLayout
+
+    private val statList = listOf("Attack", "Max Health", "Max Mana", "Defense")
 
     private val gameViewModel: GameViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val scope = CoroutineScope(Dispatchers.Main)
 
     companion object {
         fun newInstance() = GachaFragment()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_gacha, container, false)
+        return inflater.inflate(R.layout.fragment_gacha, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         tvGachaResult = view.findViewById(R.id.tvGachaResult)
+        tvGachaTitle = view.findViewById(R.id.tvGachaTitle)
+        nextStageButton = view.findViewById(R.id.nextStageButton)
         btnOk = view.findViewById(R.id.btnOk)
 
         btnOk.visibility = View.INVISIBLE
-
-        btnOk.setOnClickListener {
+        nextStageButton.setOnClickListener {
             mainViewModel.navigateTo(Screen.Rest)
         }
 
         startGachaAnimation()
-
-        return view
     }
 
     private fun startGachaAnimation() {
-        scope.launch {
+        lifecycleScope.launch {
             val startTime = System.currentTimeMillis()
             var chosenStat: String
             var increaseAmount: Int
@@ -62,27 +68,41 @@ class GachaFragment : Fragment() {
                 chosenStat = statList.random()
                 increaseAmount = (1..5).random()
 
-                tvGachaResult.text =
-                    "Rolling...\nStat: $chosenStat +$increaseAmount"
+                tvGachaTitle.text = getString(R.string.stat_gacha_title_rolling)
+                tvGachaResult.text = getString(R.string.stat_gacha_gain_rolling, chosenStat, increaseAmount)
 
-                delay(100) // update tiap 0.1 detik
+                delay(100)
             }
 
-            // hasil final
+            // Final result
             val finalStat = statList.random()
             val finalAmount = (1..5).random()
+
+            val player = gameViewModel.player.value ?: return@launch
+            val oldValue = when (finalStat) {
+                "Attack" -> player.att
+                "Max Health" -> player.maxHealth
+                "Max Mana" -> player.maxMana
+                "Defense" -> player.def
+                else -> 0
+            }
+
+            // Apply the gacha bonus
             gameViewModel.gachaStat(finalStat, finalAmount)
 
-            tvGachaResult.text =
-                "🎉 Final Result!\nStat: $finalStat +$finalAmount"
+            val newPlayer = gameViewModel.player.value ?: return@launch
+            val newValue = when (finalStat) {
+                "Attack" -> newPlayer.att
+                "Max Health" -> newPlayer.maxHealth
+                "Max Mana" -> newPlayer.maxMana
+                "Defense" -> newPlayer.def
+                else -> 0
+            }
+
+            tvGachaTitle.text = getString(R.string.stat_gacha_title)
+            tvGachaResult.text = getString(R.string.stat_gacha_gain, finalStat, oldValue, newValue, finalAmount)
             btnOk.visibility = View.VISIBLE
         }
     }
 
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        scope.cancel()
-    }
 }

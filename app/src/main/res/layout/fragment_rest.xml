@@ -5,62 +5,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    tools:context=".ui.fragment.RestFragment">
+    tools:context=".ui.fragment.RestFragment"
+    android:padding="24dp"
+>
 
+    <!-- Title / Resting message -->
     <TextView
         android:id="@+id/restMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Resting..."
         android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/restHeal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/restStatBonus"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
+    <!-- Stat bonus text -->
     <TextView
-        android:id="@+id/restStatBonus"
+        android:id="@+id/restHeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You gain"
+        android:layout_marginTop="16dp"
+        android:text="You heal for..."
         android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/nextStage"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@id/restSkillGain"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498" app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/restMessage"/>
+
+    <!-- Skill gain text -->
     <TextView
         android:id="@+id/restSkillGain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="121dp"
-        android:text="You gain"
+        android:text="New Skill: Fireball"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/nextStage"
-        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/restStatBonus"
-        app:layout_constraintVertical_bias="0.0"/>
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@id/nextStage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/restHeal"/>
+
+    <!-- Next stage button -->
     <FrameLayout
         android:id="@+id/nextStage"
-        android:layout_width="150dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="180dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/restStatBonus"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/restSkillGain">
 
         <ImageButton
             android:id="@+id/nextStageButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:contentDescription="@null"
             android:scaleType="fitXY"
-            android:src="@drawable/textured_button"
-            android:contentDescription="@null"/>
+            android:src="@drawable/textured_button"/>
 
         <TextView
             android:id="@+id/nextStageText"
@@ -69,7 +75,7 @@
             android:gravity="center"
             android:text="Next Stage"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
     </FrameLayout>
 

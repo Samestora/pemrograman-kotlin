@@ -6,7 +6,14 @@ object SkillRegistry {
         { Heal() }
     )
 
-    fun randomSkill(): Skill {
-        return skills.random().invoke()
+    fun allSkills(): List<Skill> = skills.map { it.invoke() }
+
+    fun randomSkillExcluding(owned: List<Skill>): Skill? {
+        val ownedNames = owned.map { it::class } // track by type
+        val available = skills
+            .map { it.invoke() }
+            .filter { it::class !in ownedNames }
+
+        return if (available.isEmpty()) null else available.random()
     }
 }

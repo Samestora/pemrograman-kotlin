@@ -1,32 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    tools:context=".ui.fragment.BattleFragment"
->
+    tools:context="com.sgdc.roguelike.ui.fragment.BattleFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_gravity="center"
+    <!-- Enemy Section -->
+    <TextView
+        android:id="@+id/enemyName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Battle Screen"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:layout_gravity="center"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Enemy Name"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/enemySprite"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="12dp"
+        android:src="@mipmap/ic_launcher_foreground"
+        app:layout_constraintTop_toBottomOf="@id/enemyName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/enemyHealthbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="12dp"
+        android:progress="75"
+        android:max="100"
+        android:progressDrawable="@android:drawable/progress_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/enemySprite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Battle Message -->
+    <TextView
+        android:id="@+id/battleMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Your Turn!"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/enemyHealthbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Skills Container -->
+    <LinearLayout
+        android:id="@+id/skillsContainer"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/actionRow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Action Row -->
+    <LinearLayout
+        android:id="@+id/actionRow"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
         <Button
-            android:id="@+id/btnOk"
-            android:text="OK"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/attackButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="Attack"/>
+
+        <Button
+            android:id="@+id/defenseButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="Defend"/>
+
+        <Button
+            android:id="@+id/openSkillButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="Skills"/>
     </LinearLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

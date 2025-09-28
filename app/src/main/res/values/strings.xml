@@ -2,4 +2,9 @@
     <string name="app_name">Kosongan</string>
     <string name="rest_heal_message">You gain +20 HP \n (HP: %1$d/%2$d)</string>
     <string name="skill_gain_message">You gained %1$s!</string>
+    <string name="all_skill_acquired_message">You\'ve collected all of the skills!</string>
+    <string name="stat_gacha_title">You\'ve got</string>
+    <string name="stat_gacha_title_rolling">Rolling...</string>
+    <string name="stat_gacha_gain_rolling">Stat: %1$s +%2$d</string>
+    <string name="stat_gacha_gain">%1$s: %2$d → %3$d (+%4$d)</string>
 </resources>

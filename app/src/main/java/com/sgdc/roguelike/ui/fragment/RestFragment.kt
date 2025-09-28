@@ -29,7 +29,7 @@ class RestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Show player stats after rest
-        val restStatBonus = view.findViewById<TextView>(R.id.restStatBonus)
+        val restStatBonus = view.findViewById<TextView>(R.id.restHeal)
         val restSkillGain = view.findViewById<TextView>(R.id.restSkillGain)
 
         gameViewModel.playerRest()
@@ -37,7 +37,11 @@ class RestFragment : Fragment() {
 
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
             restStatBonus?.text = getString(R.string.rest_heal_message, player.health, player.maxHealth)
-            restSkillGain?.text = getString(R.string.skill_gain_message, newSkill.name)
+            if (newSkill != null) {
+                restSkillGain?.text = getString(R.string.skill_gain_message, newSkill.name)
+            } else {
+                restSkillGain?.text = getString(R.string.all_skill_acquired_message)
+            }
         }
 
         // Handle "Next Stage"
