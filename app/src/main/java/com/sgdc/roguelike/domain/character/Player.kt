@@ -7,9 +7,7 @@ class Player (name: String,
               maxHealth: Int,
               att: Int,
               def: Int,
-    mana:Int) : Character(name, health, maxHealth, att, def){
-
-    var mana:Int = mana
+    mana:Int) : Character(name, health, maxHealth, att, def, mana){
 
     var maxMana:Int = mana
 

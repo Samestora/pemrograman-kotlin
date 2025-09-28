@@ -6,6 +6,7 @@ import com.sgdc.roguelike.domain.character.Player
 interface Skill {
     val name: String
     val description: String
+    val manaCost : Int
     // could be more complex return type than string...
     fun use(user: Character, target: Character): String
 }
@@ -13,7 +14,14 @@ interface Skill {
 class Fireball : Skill {
     override val name = "Fireball"
     override val description = "Cast fireball"
+    override val manaCost = 10
     override fun use(user: Character, target: Character): String {
+        if(user is Player){
+            user.mana -= manaCost
+            if(user.mana <= 0){
+                user.mana = 0
+            }
+        }
         val damage = user.att * 2
         target.takeDamage(damage)
         return "Dealt $damage damage to ${target.name}!"
@@ -23,8 +31,10 @@ class Fireball : Skill {
 class Heal : Skill {
     override val name = "Heal"
     override val description = "Cast heal"
+    override val manaCost = 20
     override fun use(user: Character, target: Character): String {
         if (user is Player) {
+            user.mana -= manaCost
             val healAmount = 20
             val oldHealth = user.health
             user.health = (user.health + healAmount).coerceAtMost(user.maxHealth)

@@ -30,9 +30,9 @@ class GameViewModel : ViewModel() {
     // --------------------
     fun spawnMonster() {
         val monsters = listOf(
-            Monster("Floating Evil Eye", 50, 50, 8, 3),
-            Monster("Goblin", 40, 40, 6, 2),
-            Monster("Skeleton Warrior", 60, 60, 10, 4),
+            Monster("Floating Evil Eye", 50, 50, 8, 3, 0),
+            Monster("Goblin", 40, 40, 6, 2, 0),
+            Monster("Skeleton Warrior", 60, 60, 10, 4, 0),
         )
         _monster.value = monsters.random()
         _battleMessage.value = "A wild ${_monster.value?.name} appeared!"
@@ -84,6 +84,10 @@ class GameViewModel : ViewModel() {
 
     fun playerUseSkill(skill: Skill) {
         val player = _player.value ?: return
+        if(player.mana <= 0){
+            _battleMessage.value = "Didn't have enough mana"
+            return
+        }
         val monster = _monster.value ?: return
 
         val resultMessage = skill.use(player, monster)
