@@ -84,7 +84,12 @@ class GameViewModel : ViewModel() {
 
     fun playerUseSkill(skill: Skill) {
         val player = _player.value ?: return
-        if(player.mana <= 0){
+        if(player.mana > 0){
+            player.mana -= skill.manaCost
+            if(player.mana <= 0){
+                player.mana = 0
+            }
+        }else{
             _battleMessage.value = "Didn't have enough mana"
             return
         }

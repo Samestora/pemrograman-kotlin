@@ -16,12 +16,6 @@ class Fireball : Skill {
     override val description = "Cast fireball"
     override val manaCost = 10
     override fun use(user: Character, target: Character): String {
-        if(user is Player){
-            user.mana -= manaCost
-            if(user.mana <= 0){
-                user.mana = 0
-            }
-        }
         val damage = user.att * 2
         target.takeDamage(damage)
         return "Dealt $damage damage to ${target.name}!"
@@ -34,7 +28,6 @@ class Heal : Skill {
     override val manaCost = 20
     override fun use(user: Character, target: Character): String {
         if (user is Player) {
-            user.mana -= manaCost
             val healAmount = 20
             val oldHealth = user.health
             user.health = (user.health + healAmount).coerceAtMost(user.maxHealth)
