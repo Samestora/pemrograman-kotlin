@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.sgdc.roguelike.R
+import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.ui.viewmodel.GameViewModel
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
 import com.sgdc.roguelike.ui.viewmodel.Screen
@@ -52,6 +53,8 @@ class GachaFragment : Fragment() {
 
         btnOk.visibility = View.INVISIBLE
         nextStageButton.setOnClickListener {
+            gameViewModel.playerRest()
+            SfxManager.play("button")
             mainViewModel.navigateTo(Screen.Rest)
         }
 

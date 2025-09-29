@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sgdc.roguelike.domain.character.Monster
 import com.sgdc.roguelike.domain.character.Player
+import com.sgdc.roguelike.domain.item.Item
 import com.sgdc.roguelike.domain.skill.Skill
 import com.sgdc.roguelike.domain.skill.SkillRegistry
 import kotlin.collections.plusAssign
@@ -30,9 +31,9 @@ class GameViewModel : ViewModel() {
     // --------------------
     fun spawnMonster() {
         val monsters = listOf(
-            Monster("Floating Evil Eye", 50, 50, 8, 3, 0),
-            Monster("Goblin", 40, 40, 6, 2, 0),
-            Monster("Skeleton Warrior", 60, 60, 10, 4, 0),
+            Monster("Floating Evil Eye", 50, 50, 8, 3, 0, 0),
+            Monster("Goblin", 40, 40, 6, 2, 0, 0),
+            Monster("Skeleton Warrior", 60, 60, 10, 4, 0, 0),
         )
         _monster.value = monsters.random()
         _battleMessage.value = "A wild ${_monster.value?.name} appeared!"
@@ -158,6 +159,19 @@ class GameViewModel : ViewModel() {
             // All skills already collected
             null
         }
+    }
+
+    fun playerAddItem(item: Item) {
+        val player = _player.value ?: return
+        player.addItem(item)
+        updatePlayer(player)
+    }
+
+    fun playerUseItem(item: Item) {
+        val player = _player.value ?: return
+        item.useItem(player)
+        player.removeItem(item)
+        updatePlayer(player)
     }
 
 

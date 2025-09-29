@@ -7,4 +7,6 @@
     <string name="stat_gacha_title_rolling">Rolling...</string>
     <string name="stat_gacha_gain_rolling">Stat: %1$s +%2$d</string>
     <string name="stat_gacha_gain">%1$s: %2$d → %3$d (+%4$d)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -6,8 +6,9 @@ class Monster(
     maxHealth: Int,
     att: Int,
     def: Int,
-    mana: Int
-) : Character(name, health, maxHealth, att, def, mana) {
+    mana: Int,
+    maxMana: Int
+) : Character(name, health, maxHealth, att, def, mana, maxMana) {
 
     override fun attack(target: Character) {
         val damage = (this.att - target.def).coerceAtLeast(1)

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.sgdc.roguelike.ui.viewmodel.GameViewModel
 import com.sgdc.roguelike.R
+import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.domain.skill.Skill
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
 import com.sgdc.roguelike.ui.viewmodel.Screen
@@ -53,8 +54,14 @@ class BattleFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        attackButton.setOnClickListener { gameViewModel.playerAttack() }
-        defenseButton.setOnClickListener { gameViewModel.playerDefend() }
+        attackButton.setOnClickListener {
+            gameViewModel.playerAttack()
+            SfxManager.play("button")
+        }
+        defenseButton.setOnClickListener {
+            gameViewModel.playerDefend()
+            SfxManager.play("button")
+        }
         openSkillButton.setOnClickListener {
             if (skillsContainer.visibility == View.GONE) {
                 populateSkills()
@@ -62,6 +69,7 @@ class BattleFragment : Fragment() {
             } else {
                 skillsContainer.visibility = View.GONE
             }
+            SfxManager.play("button")
         }
     }
 
@@ -75,6 +83,7 @@ class BattleFragment : Fragment() {
                 setOnClickListener {
                     gameViewModel.playerUseSkill(skill)
                     skillsContainer.visibility = View.GONE
+                    SfxManager.play("button")
                 }
             }
             skillsContainer.addView(btn)

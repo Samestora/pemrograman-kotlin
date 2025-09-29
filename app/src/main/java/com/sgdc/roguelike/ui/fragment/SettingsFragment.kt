@@ -60,12 +60,14 @@ class SettingsFragment : Fragment() {
 
         view.findViewById<Button>(R.id.backToMenuButton)?.setOnClickListener {
             viewModel.navigateTo(Screen.Menu)
+            SfxManager.play("button")
         }
 
 
         // Example: back button goes back to menu
         view.findViewById<Button>(R.id.backToMenuButton)?.setOnClickListener {
             viewModel.navigateTo(Screen.Menu)
+            SfxManager.play("button")
         }
     }
 }

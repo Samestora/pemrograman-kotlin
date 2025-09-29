@@ -18,6 +18,7 @@ import com.sgdc.roguelike.ui.fragment.GachaFragment
 import com.sgdc.roguelike.ui.fragment.MenuFragment
 import com.sgdc.roguelike.ui.fragment.RestFragment
 import com.sgdc.roguelike.ui.fragment.SettingsFragment
+import com.sgdc.roguelike.ui.fragment.StoreFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                 Screen.Death -> DeathFragment()
                 Screen.Settings -> SettingsFragment()
                 Screen.Gacha -> GachaFragment()
+                Screen.Store -> StoreFragment()
             }
 
             supportFragmentManager.beginTransaction()

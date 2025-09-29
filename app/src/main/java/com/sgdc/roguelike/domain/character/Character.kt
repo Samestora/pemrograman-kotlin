@@ -6,7 +6,8 @@ abstract class Character(
     var maxHealth: Int,
     var att: Int,
     var def: Int,
-    var mana: Int
+    var mana: Int,
+    var maxMana: Int
 ) {
     abstract fun attack(target: Character)
     abstract fun takeDamage(damage: Int)

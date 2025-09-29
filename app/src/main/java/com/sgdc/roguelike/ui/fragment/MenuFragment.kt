@@ -31,10 +31,12 @@ class MenuFragment : Fragment() {
             SfxManager.play("play")
             MusicManager.stop("main_menu")
             viewModel.navigateTo(Screen.Rest)
+            SfxManager.play("button")
         }
 
         view.findViewById<ImageButton>(R.id.settingImageButton).setOnClickListener {
             viewModel.navigateTo(Screen.Settings)
+            SfxManager.play("button")
         }
     }
 }
