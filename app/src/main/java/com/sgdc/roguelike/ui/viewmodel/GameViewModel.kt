@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sgdc.roguelike.domain.character.Monster
+import com.sgdc.roguelike.domain.character.MonsterRegistry
 import com.sgdc.roguelike.domain.character.Player
 import com.sgdc.roguelike.domain.item.Item
 import com.sgdc.roguelike.domain.skill.Skill
@@ -26,24 +27,24 @@ class GameViewModel : ViewModel() {
     private val _battleFinished = MutableLiveData<Boolean>()
     val battleFinished: LiveData<Boolean> = _battleFinished
 
+    private val _stageFloor = MutableLiveData(1)
+    val stageFloor: LiveData<Int> = _stageFloor
+
     // --------------------
     // BATTLE FLOW
     // --------------------
     fun spawnMonster() {
-        val monsters = listOf(
-            Monster("Floating Evil Eye", 50, 50, 8, 3, 0, 0),
-            Monster("Goblin", 40, 40, 6, 2, 0, 0),
-            Monster("Skeleton Warrior", 60, 60, 10, 4, 0, 0),
-        )
-        _monster.value = monsters.random()
-        _battleMessage.value = "A wild ${_monster.value?.name} appeared!"
+        val baseMonster = MonsterRegistry.randomMonster()
+        val buffed = MonsterRegistry.buffMonster(baseMonster, _stageFloor.value ?: 1)
+        _monster.value = buffed
+        _battleMessage.value = "${_monster.value?.name} has appeared!"
         _battleFinished.value = false
     }
 
     fun finishBattle() {
-        _monster.value = null
         _battleFinished.value = true
-        _battleMessage.value = "Battle finished!"
+        _monster.value = null
+        _stageFloor.value = (_stageFloor.value ?: 1) + 1
     }
 
     fun resetBattle() {
@@ -140,9 +141,13 @@ class GameViewModel : ViewModel() {
         }
     }
 
+    // --------------------
+    // REST ACTIONS
+    // --------------------
     fun playerRest() {
         _player.value?.let { player ->
             player.health = (player.health + 20).coerceAtMost(player.maxHealth)
+            player.mana = (player.mana + 10).coerceAtMost(player.maxMana)
             updatePlayer(player)
         }
     }

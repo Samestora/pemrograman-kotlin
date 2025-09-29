@@ -29,6 +29,7 @@ class BattleFragment : Fragment() {
     private lateinit var attackButton: Button
     private lateinit var defenseButton: Button
     private lateinit var enemyName: TextView
+    private lateinit var debugBar: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +49,7 @@ class BattleFragment : Fragment() {
         attackButton = view.findViewById(R.id.attackButton)
         defenseButton = view.findViewById(R.id.defenseButton)
         enemyName = view.findViewById(R.id.enemyName)
+        debugBar = view.findViewById(R.id.debugBar)
 
         setupButtons()
         observeGame()
@@ -100,8 +102,10 @@ class BattleFragment : Fragment() {
                 enemyName.text = monster.name
                 enemyHealthBar.max = monster.maxHealth
                 enemyHealthBar.progress = monster.health
+                debugBar.text = monster.maxHealth.toString()
 
                 if (monster.health <= 0) {
+                    gameViewModel.finishBattle()
                     mainViewModel.navigateTo(Screen.Gacha)
                 }
             }

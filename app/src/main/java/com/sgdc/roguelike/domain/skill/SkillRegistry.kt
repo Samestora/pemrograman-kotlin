@@ -1,5 +1,8 @@
 package com.sgdc.roguelike.domain.skill
 
+import com.sgdc.roguelike.domain.character.Character
+import com.sgdc.roguelike.domain.character.Player
+
 object SkillRegistry {
     private val skills: List<() -> Skill> = listOf(
         { Fireball() },
