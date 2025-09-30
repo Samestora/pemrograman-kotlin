@@ -9,7 +9,10 @@ import com.sgdc.roguelike.domain.character.Player
 import com.sgdc.roguelike.domain.item.Item
 import com.sgdc.roguelike.domain.skill.Skill
 import com.sgdc.roguelike.domain.skill.SkillRegistry
-import kotlin.collections.plusAssign
+import com.sgdc.roguelike.domain.turn.MonsterAction
+import com.sgdc.roguelike.domain.turn.PlayerAction
+import com.sgdc.roguelike.domain.turn.TurnManager
+import com.sgdc.roguelike.domain.turn.TurnResult
 import kotlin.reflect.KClass
 
 class GameViewModel : ViewModel() {
@@ -29,6 +32,7 @@ class GameViewModel : ViewModel() {
 
     private val _stageFloor = MutableLiveData(1)
     val stageFloor: LiveData<Int> = _stageFloor
+    private val turnManager = TurnManager()
 
     // --------------------
     // BATTLE FLOW
@@ -118,6 +122,16 @@ class GameViewModel : ViewModel() {
         _battleMessage.value = "${currentMonster.name} hits back for $damage damage!"
     }
 
+    fun monsterDefend() {
+        val currentMonster = _monster.value ?: return
+        _battleMessage.value = "${currentMonster.name} braces for impact!"
+    }
+
+    fun monsterUseSkill(){
+        val currentMonster = _monster.value ?: return
+        _battleMessage.value = "${currentMonster.name} use skill"
+    }
+
     fun <T : Skill> playerAddSkill(skillClass: KClass<T>) {
         _player.value?.let { player ->
             val skill = skillClass.constructors.first().call() // create instance
@@ -198,6 +212,33 @@ class GameViewModel : ViewModel() {
                 player.def += amount
                 _player.value = player
             }
+        }
+    }
+
+    fun performAction(action: PlayerAction, skill: Skill? = null, item: Item? = null) {
+        handlePlayerAction(action, skill, item)
+
+        val monster = _monster.value
+        if (monster != null && monster.health > 0) {
+            val monsterAction = turnManager.decideMonsterAction()
+            handleMonsterAction(monsterAction)
+        }
+    }
+
+    private fun handlePlayerAction(action: PlayerAction, skill: Skill?, item: Item?) {
+        when (action) {
+            PlayerAction.ATTACK -> playerAttack()
+            PlayerAction.DEFENCE -> playerDefend()
+            PlayerAction.SKILL -> skill?.let { playerUseSkill(it) }
+            PlayerAction.ITEM -> item?.let { playerUseItem(it) }
+        }
+    }
+
+    private fun handleMonsterAction(action: MonsterAction) {
+        when (action) {
+            MonsterAction.ATTACK -> monsterAttack()
+            MonsterAction.DEFENCE -> monsterDefend()
+            MonsterAction.SKILL -> monsterUseSkill()
         }
     }
 }
