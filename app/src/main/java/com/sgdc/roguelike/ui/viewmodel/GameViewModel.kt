@@ -46,8 +46,10 @@ class GameViewModel : ViewModel() {
     }
 
     fun finishBattle() {
+        val player = _player.value?: return
         _battleFinished.value = true
         _monster.value = null
+        player.money += (5..20).random() + ((_stageFloor.value?: 1) + 5)
         _stageFloor.value = (_stageFloor.value ?: 1) + 1
     }
 
@@ -180,10 +182,17 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    fun playerAddItem(item: Item) {
-        val player = _player.value ?: return
-        player.addItem(item)
-        updatePlayer(player)
+    fun playerAddItem(item: Item): Boolean {
+        val player = _player.value ?: return false
+        if((item.price - player.money) < 0){
+            player.money -= item.price
+            player.addItem(item)
+            updatePlayer(player)
+            return true
+        }
+        else{
+            return false
+        }
     }
 
     fun playerUseItem(item: Item) {

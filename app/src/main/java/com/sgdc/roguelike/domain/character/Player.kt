@@ -15,6 +15,8 @@ class Player (name: String,
     val skills = mutableListOf<Skill>()
     val items = mutableListOf<InventoryItem>()
 
+    var money: Int = 0
+
 
     override fun attack(target: Character) {
         val damage = (this.att - target.def).coerceAtLeast(1)

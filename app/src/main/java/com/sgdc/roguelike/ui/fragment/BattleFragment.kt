@@ -115,7 +115,6 @@ class BattleFragment : Fragment() {
                 debugBar.text = monster.maxHealth.toString()
 
                 if (monster.health <= 0) {
-                    gameViewModel.finishBattle()
                     mainViewModel.navigateTo(Screen.Gacha)
                 }
             }
