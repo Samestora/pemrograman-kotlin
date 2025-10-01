@@ -1,68 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:layout_width="match_parent"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
 >
 
     <!-- Play Game -->
-    <FrameLayout
-        android:id="@+id/playGame"
-        android:layout_width="150dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/settingButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <ImageButton
-            android:id="@+id/newGameButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/textured_button"/>
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
         <TextView
-            android:id="@+id/newGameText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="New Game"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-    </FrameLayout>
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="20sp"
+            android:textStyle="bold" tools:text="Embark"
+        />
+        <FrameLayout
+            android:id="@+id/playGame"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+        >
+
+            <ImageButton
+                android:id="@+id/newGameButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/depositphotos_10217309_stock_photo_light_in_a_dark_forest"/>
+
+        </FrameLayout>
+    </LinearLayout>
 
     <!-- Setting -->
-    <FrameLayout
-        android:id="@+id/settingButton"
-        android:layout_width="150dp"
-        android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/settingImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/textured_button"/>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:orientation="horizontal" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_weight="0.3"/>
         <TextView
-            android:id="@+id/settingText"
-            android:layout_width="match_parent"
+            android:id="@+id/highestscoreText"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical" android:layout_weight="1"
             android:gravity="center"
-            android:text="Setting"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-    </FrameLayout>
+            android:text="TextView" android:textSize="24sp" android:textStyle="bold"
+            tools:text="Highest Floor : 99"/>
+        <FrameLayout
+            android:id="@+id/settingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        >
+
+            <ImageButton
+                android:id="@+id/settingImageButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:background="@null"
+                android:scaleType="fitEnd" android:src="@drawable/settings"/>
+
+        </FrameLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
