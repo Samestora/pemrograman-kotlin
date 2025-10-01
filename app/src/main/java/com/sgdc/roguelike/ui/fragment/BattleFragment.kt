@@ -17,6 +17,9 @@ import com.sgdc.roguelike.domain.turn.PlayerAction
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
 import com.sgdc.roguelike.ui.viewmodel.Screen
 import androidx.core.view.isGone
+import com.sgdc.roguelike.domain.item.Item
+import com.sgdc.roguelike.domain.skill.Skill
+import com.sgdc.roguelike.domain.turn.Turn
 import com.sgdc.roguelike.domain.turn.TurnManager
 import com.sgdc.roguelike.domain.turn.TurnResult
 
@@ -31,7 +34,7 @@ class BattleFragment : Fragment() {
     private lateinit var enemyHealthBar: ProgressBar
     private lateinit var attackButton: Button
     private lateinit var defenseButton: Button
-    private lateinit var nextBtn: Button
+    private lateinit var nextButton: Button
     private lateinit var enemyName: TextView
     private lateinit var debugBar: TextView
 
@@ -56,7 +59,7 @@ class BattleFragment : Fragment() {
         defenseButton = view.findViewById(R.id.defenseButton)
         enemyName = view.findViewById(R.id.enemyName)
         debugBar = view.findViewById(R.id.debugBar)
-        nextBtn = view.findViewById(R.id.nextBtn)
+        nextButton = view.findViewById(R.id.nextBtn)
 
         setupButtons()
         observeGame()
@@ -64,11 +67,15 @@ class BattleFragment : Fragment() {
 
     private fun setupButtons() {
         attackButton.setOnClickListener {
-            gameViewModel.performAction(PlayerAction.ATTACK)
+            gameViewModel.performPlayerAction(PlayerAction.ATTACK)
+            setActionButtonsVisible(false)
+            setNextButtonVisible(true)
             SfxManager.play("attack")
         }
         defenseButton.setOnClickListener {
-            gameViewModel.performAction(PlayerAction.DEFENCE)
+            gameViewModel.performPlayerAction(PlayerAction.DEFENCE)
+            setActionButtonsVisible(false)
+            setNextButtonVisible(true)
             SfxManager.play("button")
         }
         openSkillButton.setOnClickListener {
@@ -80,21 +87,30 @@ class BattleFragment : Fragment() {
             }
             SfxManager.play("button")
         }
-        nextBtn.setOnClickListener {
+        nextButton.setOnClickListener {
+            gameViewModel.performMonsterAction()
+            turnManager.switchTurn()
+            setActionButtonsVisible(true)
+            setNextButtonVisible(false)
         }
     }
 
     private fun populateSkills() {
         skillsContainer.removeAllViews()
         val player = gameViewModel.player.value ?: return
+        val manaRemain = player.mana
 
         for (skill in player.skills) {
             val btn = Button(requireContext()).apply {
                 text = skill.name
                 setOnClickListener {
-                    gameViewModel.performAction(PlayerAction.SKILL, skill)
-                    skillsContainer.visibility = View.GONE
-                    SfxManager.play(skill.name)
+                    if(manaRemain >= skill.manaCost){
+                        gameViewModel.performPlayerAction(PlayerAction.SKILL, skill)
+                        skillsContainer.visibility = View.GONE
+                        setActionButtonsVisible(false)
+                        setNextButtonVisible(true)
+                        SfxManager.play(skill.name)
+                    }
                 }
             }
             skillsContainer.addView(btn)
@@ -123,6 +139,17 @@ class BattleFragment : Fragment() {
         gameViewModel.battleMessage.observe(viewLifecycleOwner) { message ->
             battleMessage.text = message
         }
+    }
+
+    private fun setActionButtonsVisible(visible: Boolean) {
+        val visibility = if (visible) View.VISIBLE else View.GONE
+        attackButton.visibility = visibility
+        defenseButton.visibility = visibility
+        openSkillButton.visibility = visibility
+    }
+
+    private fun setNextButtonVisible(visible: Boolean) {
+        nextButton.visibility = if (visible) View.VISIBLE else View.GONE
     }
 }
 

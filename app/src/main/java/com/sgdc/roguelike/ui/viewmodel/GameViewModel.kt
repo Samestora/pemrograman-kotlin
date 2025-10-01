@@ -11,8 +11,8 @@ import com.sgdc.roguelike.domain.skill.Skill
 import com.sgdc.roguelike.domain.skill.SkillRegistry
 import com.sgdc.roguelike.domain.turn.MonsterAction
 import com.sgdc.roguelike.domain.turn.PlayerAction
+import com.sgdc.roguelike.domain.turn.Turn
 import com.sgdc.roguelike.domain.turn.TurnManager
-import com.sgdc.roguelike.domain.turn.TurnResult
 import kotlin.reflect.KClass
 
 class GameViewModel : ViewModel() {
@@ -224,17 +224,7 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    fun performAction(action: PlayerAction, skill: Skill? = null, item: Item? = null) {
-        handlePlayerAction(action, skill, item)
-
-        val monster = _monster.value
-        if (monster != null && monster.health > 0) {
-            val monsterAction = turnManager.decideMonsterAction()
-            handleMonsterAction(monsterAction)
-        }
-    }
-
-    private fun handlePlayerAction(action: PlayerAction, skill: Skill?, item: Item?) {
+    fun handlePlayerAction(action: PlayerAction, skill: Skill?, item: Item?) {
         when (action) {
             PlayerAction.ATTACK -> playerAttack()
             PlayerAction.DEFENCE -> playerDefend()
@@ -243,11 +233,24 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    private fun handleMonsterAction(action: MonsterAction) {
+    fun handleMonsterAction(action: MonsterAction) {
         when (action) {
             MonsterAction.ATTACK -> monsterAttack()
             MonsterAction.DEFENCE -> monsterDefend()
             MonsterAction.SKILL -> monsterUseSkill()
         }
+    }
+
+    fun performPlayerAction(action: PlayerAction, skill: Skill? = null, item: Item? = null) {
+        if (turnManager.currentTurn != Turn.PLAYER) return
+        handlePlayerAction(action,skill,item)
+        turnManager.switchTurn()
+    }
+
+    fun performMonsterAction() {
+        if (turnManager.currentTurn != Turn.MONSTER) return
+        val action = turnManager.decideMonsterAction()
+        handleMonsterAction(action)
+        turnManager.switchTurn()
     }
 }

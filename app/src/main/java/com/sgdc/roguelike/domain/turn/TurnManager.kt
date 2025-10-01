@@ -23,4 +23,8 @@ class TurnManager {
             else -> MonsterAction.DEFENCE
         }
     }
+
+    fun switchTurn() {
+        currentTurn = if (currentTurn == Turn.PLAYER) Turn.MONSTER else Turn.PLAYER
+    }
 }
