@@ -13,6 +13,7 @@ import com.sgdc.roguelike.domain.bgm.MusicManager
 import com.sgdc.roguelike.R
 import com.sgdc.roguelike.ui.viewmodel.Screen
 import com.sgdc.roguelike.domain.bgm.SfxManager
+import com.sgdc.roguelike.domain.character.MonsterRegistry
 import com.sgdc.roguelike.ui.fragment.BattleFragment
 import com.sgdc.roguelike.ui.fragment.GachaFragment
 import com.sgdc.roguelike.ui.fragment.MenuFragment
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         MusicManager.init(this)
         SfxManager.init(this)
+        MonsterRegistry.init(this)
 
         // Splash screen API
         val splashScreen = installSplashScreen()

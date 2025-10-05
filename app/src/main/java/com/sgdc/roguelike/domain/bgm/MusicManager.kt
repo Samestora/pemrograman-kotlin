@@ -4,8 +4,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import com.sgdc.roguelike.App
 import com.sgdc.roguelike.R
-import com.sgdc.roguelike.domain.bgm.Sound
-import com.sgdc.roguelike.domain.setting.SettingsManager
+import com.sgdc.roguelike.domain.save.SettingsManager
 
 object MusicManager : Sound {
     private var mediaPlayer: MediaPlayer? = null
@@ -16,6 +15,7 @@ object MusicManager : Sound {
     override fun init(context: Context) {
         muted = !SettingsManager.isMusicEnabled(context)
         musicMap["main_menu"] = R.raw.main_menu
+        musicMap["death_screen"] = R.raw.death_screen_ochiba
     }
 
     override fun play(name: String?) {

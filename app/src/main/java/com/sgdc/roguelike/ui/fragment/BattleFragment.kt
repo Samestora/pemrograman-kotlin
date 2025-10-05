@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -17,6 +18,7 @@ import com.sgdc.roguelike.domain.turn.PlayerAction
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
 import com.sgdc.roguelike.ui.viewmodel.Screen
 import androidx.core.view.isGone
+import com.sgdc.roguelike.domain.character.MonsterRegistry
 import com.sgdc.roguelike.domain.item.Item
 import com.sgdc.roguelike.domain.skill.Skill
 import com.sgdc.roguelike.domain.turn.Turn
@@ -36,7 +38,13 @@ class BattleFragment : Fragment() {
     private lateinit var defenseButton: Button
     private lateinit var nextButton: Button
     private lateinit var enemyName: TextView
-    private lateinit var debugBar: TextView
+    private lateinit var enemySprite: ImageView
+
+    //    PLAYER
+    private lateinit var playerHealthBar: ProgressBar
+    private lateinit var playerHealthText: TextView
+    private lateinit var playerManaBar: ProgressBar
+    private lateinit var playerManaText: TextView
 
     private var turnManager = TurnManager()
 
@@ -51,6 +59,7 @@ class BattleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        enemySprite = view.findViewById(R.id.enemySprite)
         skillsContainer = view.findViewById(R.id.skillsContainer)
         openSkillButton = view.findViewById(R.id.openSkillButton)
         battleMessage = view.findViewById(R.id.battleMessage)
@@ -58,8 +67,12 @@ class BattleFragment : Fragment() {
         attackButton = view.findViewById(R.id.attackButton)
         defenseButton = view.findViewById(R.id.defenseButton)
         enemyName = view.findViewById(R.id.enemyName)
-        debugBar = view.findViewById(R.id.debugBar)
         nextButton = view.findViewById(R.id.nextBtn)
+
+        playerHealthBar = view.findViewById(R.id.playerHealthbar)
+        playerHealthText = view.findViewById(R.id.playerHealthText)
+        playerManaBar = view.findViewById(R.id.playerManaBar)
+        playerManaText = view.findViewById(R.id.playerManaText)
 
         setupButtons()
         observeGame()
@@ -120,15 +133,32 @@ class BattleFragment : Fragment() {
 
     private fun observeGame() {
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            // TODO: if you add a player HP bar, update it here
+            if (player != null) {
+                playerHealthBar.max = player.maxHealth
+                playerHealthBar.progress = player.health
+                playerManaBar.max = player.maxMana
+                playerManaBar.progress = player.mana
+
+                if (player.health <= 0) {
+                    mainViewModel.navigateTo(Screen.Death)
+                }
+            }
         }
 
         gameViewModel.monster.observe(viewLifecycleOwner) { monster ->
             if (monster != null) {
                 enemyName.text = monster.name
+                // Use the registry to get the resource ID from the sprite name
+                val spriteResId = MonsterRegistry.getSpriteResId(monster.spriteName)
+                if (spriteResId != null) {
+                    enemySprite.setImageResource(spriteResId)
+                } else {
+                    // Optional: Set a default image if the sprite is not found
+                    enemySprite.setImageResource(R.drawable.default_monster_sprite)
+                }
+
                 enemyHealthBar.max = monster.maxHealth
                 enemyHealthBar.progress = monster.health
-                debugBar.text = monster.maxHealth.toString()
 
                 if (monster.health <= 0) {
                     mainViewModel.navigateTo(Screen.Gacha)

@@ -15,6 +15,11 @@ class TurnManager {
             }
         }
     }
+
+    fun reset() {
+        currentTurn = Turn.PLAYER
+    }
+
     fun decideMonsterAction(): MonsterAction {
         val roll = (1..10).random()
         return when {

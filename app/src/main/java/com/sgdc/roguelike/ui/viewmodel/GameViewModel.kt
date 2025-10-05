@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sgdc.roguelike.domain.character.Monster
 import com.sgdc.roguelike.domain.character.MonsterRegistry
+import com.sgdc.roguelike.domain.character.MonsterRegistry.init
 import com.sgdc.roguelike.domain.character.Player
 import com.sgdc.roguelike.domain.item.Item
 import com.sgdc.roguelike.domain.skill.Skill
@@ -145,17 +146,17 @@ class GameViewModel : ViewModel() {
 
     //    TODO make generic playerUseSkill(SkillName) instead it should be a query => { it is SkillName }
     //      Can only be used from player to player DONT TOUCH!!!!!
-    fun <T : Skill> playerUseSkill(skillClass: KClass<T>) {
-        _player.value?.let { player ->
-            val skill = player.skills.firstOrNull { skillClass.isInstance(it) }
-            if (skill != null) {
-                (skill as T).use(player, player)
-                updatePlayer(player)
-            } else {
-                println("Player does not have skill: ${skillClass.simpleName}")
-            }
-        }
-    }
+//    fun <T : Skill> playerUseSkill(skillClass: KClass<T>) {
+//        _player.value?.let { player ->
+//            val skill = player.skills.firstOrNull { skillClass.isInstance(it) }
+//            if (skill != null) {
+//                (skill as T).use(player, player)
+//                updatePlayer(player)
+//            } else {
+//                println("Player does not have skill: ${skillClass.simpleName}")
+//            }
+//        }
+//    }
 
     // --------------------
     // REST ACTIONS

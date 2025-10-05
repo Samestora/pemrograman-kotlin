@@ -13,29 +13,33 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:scaleType="fitXY"
         android:src="@drawable/depositphotos_10217309_stock_photo_light_in_a_dark_forest"
-        app:layout_constraintBottom_toTopOf="@+id/attackButton" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
     <Button
         android:id="@+id/attackButton"
         style="@android:style/Widget.Button"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_weight="1" android:fontFamily="monospace"
-        android:text="Attack" app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="472dp"/>
+        android:layout_weight="1"
+        android:fontFamily="monospace" android:text="Attack"
+        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" app:layout_constraintVertical_bias="0.42000002"/>
     <Button
         android:id="@+id/defenseButton"
         style="@android:style/Widget.Button"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp" android:layout_weight="1"
-        android:fontFamily="monospace" android:text="Defend"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/attackButton"/>
+        android:layout_marginStart="8dp"
+        android:layout_weight="1" android:fontFamily="monospace"
+        android:text="Defend" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/attackButton"
+        app:layout_constraintVertical_bias="0.0"/>
     <Button
         android:id="@+id/openSkillButton"
         style="@android:style/Widget.Button"
@@ -43,35 +47,30 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp" android:layout_weight="1"
         android:fontFamily="monospace" android:text="Skills"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/defenseButton"/>
+        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/defenseButton" app:layout_constraintVertical_bias="0.0"/>
     <TextView
         android:id="@+id/enemyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:background="#2E2A2A"
-        tools:text="Enemy Name"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="@+id/imageView" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" tools:text="Enemy Name"/>
 
     <ImageView
         android:id="@+id/enemySprite"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@mipmap/ic_launcher_foreground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enemyName"/>
+        app:layout_constraintBottom_toBottomOf="@+id/imageView" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/enemyName"
+        app:layout_constraintVertical_bias="0.2"/>
 
 
-    <TextView
-        android:id="@+id/debugBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:text="TextView"/>
     <ProgressBar
         android:id="@+id/enemyHealthbar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -82,37 +81,65 @@
         android:progress="75"
         android:progressDrawable="@android:drawable/progress_horizontal"
         android:progressTint="#C82929"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/enemySprite"/>
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enemySprite" app:layout_constraintVertical_bias="0.0"/>
 
     <!-- Battle Message -->
+    <ProgressBar
+        android:id="@+id/playerHealthbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:max="100"
+        android:progress="75"
+        android:progressDrawable="@android:drawable/progress_horizontal"
+        android:progressTint="#C82929"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" app:layout_constraintVertical_bias="0.1"/>
+    <ProgressBar
+        android:id="@+id/playerManaBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:max="100"
+        android:progress="75"
+        android:progressDrawable="@android:drawable/progress_horizontal"
+        android:progressTint="#2934C8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/playerHealthbar"
+        app:layout_constraintVertical_bias="0.05"/>
     <TextView
         android:id="@+id/battleMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Your Turn!"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/attackButton"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+        app:layout_constraintTop_toBottomOf="@+id/enemyHealthbar" app:layout_constraintVertical_bias="0.13999999"
+        tools:text="Your Turn!"/>
 
     <!-- Skills Container -->
     <LinearLayout
         android:id="@+id/skillsContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/defenseButton" app:layout_constraintStart_toStartOf="@id/defenseButton">
+        android:visibility="gone" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/attackButton" app:layout_constraintTop_toBottomOf="@+id/playerManaBar"
+        app:layout_constraintVertical_bias="0.1">
     </LinearLayout>
 
     <!-- Action Row -->
     <Button
         android:id="@+id/nextBtn"
+        style="@android:style/Widget.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
@@ -121,7 +148,22 @@
         android:text="NEXT"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+        android:id="@+id/playerHealthText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" app:layout_constraintVertical_bias="0.1"
+        tools:text="100/100"/>
+    <TextView
+        android:id="@+id/playerManaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/playerHealthbar"
+        app:layout_constraintVertical_bias="0.05" tools:text="100/100"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

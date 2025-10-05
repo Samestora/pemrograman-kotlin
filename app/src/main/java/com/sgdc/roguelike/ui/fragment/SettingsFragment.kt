@@ -14,7 +14,7 @@ import com.sgdc.roguelike.domain.bgm.MusicManager
 import com.sgdc.roguelike.R
 import com.sgdc.roguelike.ui.viewmodel.Screen
 import com.sgdc.roguelike.domain.bgm.SfxManager
-import com.sgdc.roguelike.domain.setting.SettingsManager
+import com.sgdc.roguelike.domain.save.SettingsManager
 
 class SettingsFragment : Fragment() {
 
