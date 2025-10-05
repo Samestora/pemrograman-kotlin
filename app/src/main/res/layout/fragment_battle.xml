@@ -61,14 +61,19 @@
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1" tools:text="Enemy Name"/>
 
-    <ImageView
-        android:id="@+id/enemySprite"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@mipmap/ic_launcher_foreground"
+    <FrameLayout
+        android:id="@+id/enemyContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/imageView" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/enemyName"
-        app:layout_constraintVertical_bias="0.2"/>
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/enemyName">
+        <ImageView
+            android:id="@+id/enemySprite"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher_foreground"
+            app:layout_constraintVertical_bias="0.2"/>
+    </FrameLayout>
 
 
     <ProgressBar
@@ -83,7 +88,7 @@
         android:progressTint="#C82929"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enemySprite" app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintTop_toBottomOf="@id/enemyContainer" app:layout_constraintVertical_bias="0.0"/>
 
     <!-- Battle Message -->
     <ProgressBar

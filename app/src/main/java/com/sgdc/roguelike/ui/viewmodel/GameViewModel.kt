@@ -39,6 +39,7 @@ class GameViewModel : ViewModel() {
     // BATTLE FLOW
     // --------------------
     fun spawnMonster() {
+        turnManager.resetTurn()
         val baseMonster = MonsterRegistry.randomMonster()
         val buffed = MonsterRegistry.buffMonster(baseMonster, _stageFloor.value ?: 1)
         _monster.value = buffed
@@ -93,6 +94,7 @@ class GameViewModel : ViewModel() {
 
     fun playerUseSkill(skill: Skill) {
         val player = _player.value ?: return
+        println("Gameview Mana: " + player.mana)
         if(player.mana > 0){
             player.mana -= skill.manaCost
             if(player.mana <= 0){
@@ -185,7 +187,7 @@ class GameViewModel : ViewModel() {
 
     fun playerAddItem(item: Item): Boolean {
         val player = _player.value ?: return false
-        if((item.price - player.money) < 0){
+        if((item.price - player.money) <= 0){
             player.money -= item.price
             player.addItem(item)
             updatePlayer(player)

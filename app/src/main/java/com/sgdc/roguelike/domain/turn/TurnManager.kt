@@ -32,4 +32,8 @@ class TurnManager {
     fun switchTurn() {
         currentTurn = if (currentTurn == Turn.PLAYER) Turn.MONSTER else Turn.PLAYER
     }
+
+    fun resetTurn(){
+        currentTurn = Turn.PLAYER
+    }
 }

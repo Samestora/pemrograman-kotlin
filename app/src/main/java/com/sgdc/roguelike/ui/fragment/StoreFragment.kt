@@ -35,7 +35,7 @@ class StoreFragment : Fragment() {
         val btnBuyManaPotion = view.findViewById<Button>(R.id.btnBuyManaPotion)
         val warningText = view.findViewById<TextView>(R.id.tvWarning)
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            view.findViewById<TextView>(R.id.tvCurrency).text = player.money.toString()
+            view.findViewById<TextView>(R.id.tvCurrency).text = "${player.money} Gold"
         }
 
         // Buy Health Potion
@@ -43,6 +43,7 @@ class StoreFragment : Fragment() {
             val buy = gameViewModel.playerAddItem(HealthPotion())
             if(!buy){
                 warningText.visibility = View.VISIBLE
+                SfxManager.play("decline")
                 viewLifecycleOwner.lifecycleScope.launch {
                     delay(1500)
                     warningText.visibility = View.GONE
@@ -55,6 +56,7 @@ class StoreFragment : Fragment() {
         btnBuyManaPotion.setOnClickListener {
             val buy = gameViewModel.playerAddItem(ManaPotion())
             if(!buy){
+                SfxManager.play("decline")
                 warningText.visibility = View.VISIBLE
                 viewLifecycleOwner.lifecycleScope.launch {
                     delay(1500)

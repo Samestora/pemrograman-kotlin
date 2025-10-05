@@ -23,7 +23,7 @@
 
                 <TextView
                     android:id="@+id/tvHealthPotion"
-                    android:text="Health Potion (+20 HP)"
+                    android:text="Health Potion - 20 Gold"
                     android:textSize="16sp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -44,7 +44,7 @@
 
                 <TextView
                     android:id="@+id/tvManaPotion"
-                    android:text="Mana Potion (+20 MP)"
+                    android:text="Mana Potion - 30 Gold"
                     android:textSize="16sp"
                     android:layout_weight="1"
                     android:layout_width="0dp"

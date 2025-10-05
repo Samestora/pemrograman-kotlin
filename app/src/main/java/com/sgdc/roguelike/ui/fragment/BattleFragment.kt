@@ -24,6 +24,7 @@ import com.sgdc.roguelike.domain.skill.Skill
 import com.sgdc.roguelike.domain.turn.Turn
 import com.sgdc.roguelike.domain.turn.TurnManager
 import com.sgdc.roguelike.domain.turn.TurnResult
+import com.sgdc.roguelike.effect.VisualEffect
 
 class BattleFragment : Fragment() {
 
@@ -84,6 +85,7 @@ class BattleFragment : Fragment() {
             setActionButtonsVisible(false)
             setNextButtonVisible(true)
             SfxManager.play("attack")
+            VisualEffect.play("attack", enemySprite)
         }
         defenseButton.setOnClickListener {
             gameViewModel.performPlayerAction(PlayerAction.DEFENCE)
@@ -111,18 +113,25 @@ class BattleFragment : Fragment() {
     private fun populateSkills() {
         skillsContainer.removeAllViews()
         val player = gameViewModel.player.value ?: return
-        val manaRemain = player.mana
-
         for (skill in player.skills) {
             val btn = Button(requireContext()).apply {
                 text = skill.name
                 setOnClickListener {
-                    if(manaRemain >= skill.manaCost){
+                    val currentPlayer = gameViewModel.player.value ?: return@setOnClickListener
+                    val manaRemain = currentPlayer.mana
+                    if(manaRemain >= (skill.manaCost)){
                         gameViewModel.performPlayerAction(PlayerAction.SKILL, skill)
                         skillsContainer.visibility = View.GONE
                         setActionButtonsVisible(false)
                         setNextButtonVisible(true)
                         SfxManager.play(skill.name)
+                        if(skill.name.lowercase() != "heal"){
+                            VisualEffect.play(skill.name, enemySprite)
+                        }
+                    }
+                    else{
+                        battleMessage.text = "Didn't have enough mana"
+                        SfxManager.play("decline")
                     }
                 }
             }
@@ -176,6 +185,7 @@ class BattleFragment : Fragment() {
         attackButton.visibility = visibility
         defenseButton.visibility = visibility
         openSkillButton.visibility = visibility
+        skillsContainer.visibility = visibility
     }
 
     private fun setNextButtonVisible(visible: Boolean) {
