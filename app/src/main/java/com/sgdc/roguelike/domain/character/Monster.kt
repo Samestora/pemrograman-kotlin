@@ -7,7 +7,8 @@ class Monster(
     att: Int,
     def: Int,
     mana: Int,
-    maxMana: Int
+    maxMana: Int,
+    val spriteName: String,
 ) : Character(name, health, maxHealth, att, def, mana, maxMana) {
 
     override fun attack(target: Character) {

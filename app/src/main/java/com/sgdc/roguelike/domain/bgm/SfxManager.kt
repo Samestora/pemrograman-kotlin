@@ -4,8 +4,7 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
 import com.sgdc.roguelike.R
-import com.sgdc.roguelike.domain.bgm.Sound
-import com.sgdc.roguelike.domain.setting.SettingsManager
+import com.sgdc.roguelike.domain.save.SettingsManager
 
 object SfxManager : Sound {
     private lateinit var soundPool: SoundPool

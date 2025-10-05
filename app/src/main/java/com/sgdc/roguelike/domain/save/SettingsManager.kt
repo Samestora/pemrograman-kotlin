@@ -1,4 +1,4 @@
-package com.sgdc.roguelike.domain.setting
+package com.sgdc.roguelike.domain.save
 
 import android.content.Context
 import androidx.core.content.edit
