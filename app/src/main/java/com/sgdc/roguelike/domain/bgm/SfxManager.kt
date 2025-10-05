@@ -30,6 +30,8 @@ object SfxManager : Sound {
         soundMap["attack"] = soundPool.load(context, R.raw.sfx_basic_attack, 1)
         soundMap["buy"] = soundPool.load(context, R.raw.sfx_buying, 1)
         soundMap["button"] = soundPool.load(context, R.raw.sfx_button, 1)
+        soundMap["defence"] = soundPool.load(context, R.raw.sfx_defence, 1)
+        soundMap["decline"] = soundPool.load(context, R.raw.sfx_decline, 1)
     }
 
     override fun play(name: String?) {

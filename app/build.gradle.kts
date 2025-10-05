@@ -51,4 +51,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
     implementation(kotlin("reflect"))
+    implementation(libs.apng)
+    implementation(libs.gif)
 }
