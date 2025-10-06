@@ -79,6 +79,9 @@ class BattleFragment : Fragment() {
         playerManaText = view.findViewById(R.id.playerManaText)
         playerStatsContainer = view.findViewById(R.id.playerStatsContainer)
 
+        playerHealthText.text = "HP"
+        playerManaText.text = "MP"
+
         setupButtons()
         observeGame()
     }

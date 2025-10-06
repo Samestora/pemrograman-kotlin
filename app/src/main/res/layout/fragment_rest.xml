@@ -5,78 +5,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.RestFragment"
-    android:padding="24dp"
->
+    android:padding="20dp"
+    tools:context=".ui.fragment.RestFragment">
 
-    <!-- Title / Resting message -->
+    <!-- Resting Message -->
     <TextView
         android:id="@+id/restMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:text="Resting..."
         android:textColor="@android:color/white"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/restHeal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
 
-    <!-- Stat bonus text -->
+    <!-- Heal and Mana messages -->
     <TextView
         android:id="@+id/restHeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:text="You heal for..."
         android:textColor="@android:color/white"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@id/restSkillGain"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/restMessage"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restMessage"/>
 
-    <!-- Skill gain text -->
-    <TextView
-        android:id="@+id/restSkillGain"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/statsBtn"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:text="New Skill: Fireball"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@id/nextStage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/restHeal"/>
+        android:text="Stats"
+        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35000002"/>
 
+    <!-- Skill gain -->
+
+    <!-- Store and Item buttons -->
     <LinearLayout
-        android:id="@+id/itemContainer"
-        android:orientation="vertical"
+        android:id="@+id/buttonRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:visibility="gone"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/nextStage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/statsBtn"
+        app:layout_constraintVertical_bias="0.25">
+
+        <Button
+            android:id="@+id/storeBtn"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="Store"/>
+
+        <Button
+            android:id="@+id/itemBtn"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Use Item"/>
+    </LinearLayout>
 
     <!-- Next stage button -->
     <FrameLayout
         android:id="@+id/nextStage"
-        android:layout_width="180dp"
-        android:layout_height="72dp"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/restSkillGain">
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/buttonRow">
 
         <ImageButton
             android:id="@+id/nextStageButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:contentDescription="@null"
+            android:contentDescription="Next Stage"
             android:scaleType="fitXY"
             android:src="@drawable/textured_button"/>
 
@@ -90,30 +99,5 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
     </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/storeItemLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/nextStage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <Button
-            android:id="@+id/storeBtn"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="Store" />
-
-        <Button
-            android:id="@+id/itemBtn"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="Use Item" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

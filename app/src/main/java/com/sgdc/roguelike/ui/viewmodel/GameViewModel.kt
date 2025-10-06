@@ -8,6 +8,7 @@ import com.sgdc.roguelike.domain.character.MonsterRegistry
 import com.sgdc.roguelike.domain.character.MonsterRegistry.init
 import com.sgdc.roguelike.domain.character.Player
 import com.sgdc.roguelike.domain.item.Item
+import com.sgdc.roguelike.domain.save.GameProgress
 import com.sgdc.roguelike.domain.skill.Skill
 import com.sgdc.roguelike.domain.skill.SkillRegistry
 import com.sgdc.roguelike.domain.turn.MonsterAction
@@ -171,6 +172,13 @@ class GameViewModel : ViewModel() {
         }
     }
 
+    fun isAllSkillsAvailable() : Boolean {
+        val player = _player.value ?: return false
+        val newSkill = SkillRegistry.randomSkillExcluding(player.skills)
+
+        return newSkill != null
+    }
+
     fun grantRandomSkill(): Skill? {
         val player = _player.value ?: return null
         val newSkill = SkillRegistry.randomSkillExcluding(player.skills)
@@ -194,6 +202,17 @@ class GameViewModel : ViewModel() {
             return true
         }
         else{
+            return false
+        }
+    }
+
+    fun playerBuyRandomSkill(): Boolean {
+        val player = _player.value ?: return false
+        if (player.money >= 100) {
+            player.money -= 100
+            grantRandomSkill()
+            return true
+        } else {
             return false
         }
     }

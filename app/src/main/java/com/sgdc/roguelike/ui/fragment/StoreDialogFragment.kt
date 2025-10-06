@@ -38,9 +38,17 @@ class StoreDialogFragment : DialogFragment() {
         val btnBuyHealth = view.findViewById<Button>(R.id.btnBuyHealthPotion)
         val btnBuyMana = view.findViewById<Button>(R.id.btnBuyManaPotion)
         val btnClose = view.findViewById<Button>(R.id.btnCloseStore)
+        val btnBuyRandomSkill = view.findViewById<Button>(R.id.btnBuyRandomSkill)
+        val textBuyRandomSkill = view.findViewById<TextView>(R.id.tvBuyRandomSkill)
 
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
             tvGold.text = "Gold: ${player.money}"
+            if (gameViewModel.isAllSkillsAvailable()) {
+                btnBuyRandomSkill.visibility = View.VISIBLE
+            } else {
+                btnBuyRandomSkill.visibility = View.GONE
+                textBuyRandomSkill.text = getString(R.string.all_skill_acquired_message)
+            }
         }
 
         btnBuyHealth.setOnClickListener {
@@ -60,6 +68,17 @@ class StoreDialogFragment : DialogFragment() {
                 SfxManager.play("decline")
                 tvWarning.visibility = View.VISIBLE
             } else {
+                SfxManager.play("buy")
+                tvWarning.visibility = View.GONE
+            }
+        }
+
+        btnBuyRandomSkill.setOnClickListener {
+            val success = gameViewModel.playerBuyRandomSkill()
+            if (!success) {
+                SfxManager.play("decline")
+                tvWarning.visibility = View.VISIBLE
+            }else {
                 SfxManager.play("buy")
                 tvWarning.visibility = View.GONE
             }

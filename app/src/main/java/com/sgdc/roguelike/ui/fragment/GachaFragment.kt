@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.sgdc.roguelike.R
 import com.sgdc.roguelike.domain.bgm.SfxManager
+import com.sgdc.roguelike.domain.save.GameProgress
 import com.sgdc.roguelike.ui.viewmodel.GameViewModel
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
 import com.sgdc.roguelike.ui.viewmodel.Screen
@@ -45,6 +46,7 @@ class GachaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        GameProgress.setHighScore(requireContext(), gameViewModel.stageFloor.value ?: 0)
 
         tvGachaResult = view.findViewById(R.id.tvGachaResult)
         tvGachaTitle = view.findViewById(R.id.tvGachaTitle)

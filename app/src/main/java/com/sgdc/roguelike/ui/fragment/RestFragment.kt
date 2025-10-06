@@ -16,6 +16,7 @@ import com.sgdc.roguelike.R
 import com.sgdc.roguelike.ui.viewmodel.Screen
 import androidx.core.view.isGone
 import com.sgdc.roguelike.domain.bgm.SfxManager
+import com.sgdc.roguelike.domain.save.GameProgress
 
 class RestFragment : Fragment() {
 
@@ -36,24 +37,22 @@ class RestFragment : Fragment() {
 
         // Show player stats after rest
         val restStatBonus = view.findViewById<TextView>(R.id.restHeal)
-        val restSkillGain = view.findViewById<TextView>(R.id.restSkillGain)
         itemsContainer = view.findViewById(R.id.itemContainer)
 
-        val newSkill = gameViewModel.grantRandomSkill()
-
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            restStatBonus?.text = getString(R.string.rest_heal_message, player.health, player.maxHealth)
-            if (newSkill != null) {
-                restSkillGain?.text = getString(R.string.skill_gain_message, newSkill.name)
-            } else {
-                restSkillGain?.text = getString(R.string.all_skill_acquired_message)
-            }
+            restStatBonus.text = getString(R.string.rest_heal_message, player.health, player.maxHealth)
+            restStatBonus?.text = "+20 HP & 10 MP"
         }
 
         // Handle "Next Stage"
         view.findViewById<ImageButton>(R.id.nextStageButton)?.setOnClickListener {
             gameViewModel.resetBattle()
             mainViewModel.navigateTo(Screen.Battle)
+        }
+
+        view.findViewById<Button>(R.id.statsBtn)?.setOnClickListener {
+            PlayerStatsDialogFragment().show(parentFragmentManager, "PlayerStatsDialog")
+            SfxManager.play("button")
         }
 
         view.findViewById<Button>(R.id.storeBtn)?.setOnClickListener {
