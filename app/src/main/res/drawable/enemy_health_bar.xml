@@ -1,0 +1,37 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/enemyHealthBarContainer"
+             android:layout_width="250dp"
+             android:layout_height="25dp"
+             android:background="#3D3D3D"
+             android:clipToPadding="false"
+             android:clipChildren="false"
+             android:padding="2dp">
+
+    <!-- Left half -->
+    <View
+        android:id="@+id/leftBar"
+        android:layout_width="50%"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@drawable/gradient_left"
+        android:scaleX="1" />
+
+    <!-- Right half -->
+    <View
+        android:id="@+id/rightBar"
+        android:layout_width="50%"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="@drawable/gradient_right"
+        android:scaleX="1" />
+
+    <TextView
+        android:id="@+id/monsterHealthText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="100 / 100"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+</FrameLayout>
