@@ -1,5 +1,8 @@
 package com.sgdc.roguelike.ui.fragment
 
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,8 +33,6 @@ class BattleFragment : Fragment() {
 
     private val gameViewModel: GameViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-
-    private lateinit var skillsContainer: LinearLayout
     private lateinit var openSkillButton: Button
     private lateinit var battleMessage: TextView
     private lateinit var enemyHealthBar: ProgressBar
@@ -40,12 +41,14 @@ class BattleFragment : Fragment() {
     private lateinit var nextButton: Button
     private lateinit var enemyName: TextView
     private lateinit var enemySprite: ImageView
+    private lateinit var monsterHealthText: TextView
 
     //    PLAYER
     private lateinit var playerHealthBar: ProgressBar
     private lateinit var playerHealthText: TextView
     private lateinit var playerManaBar: ProgressBar
     private lateinit var playerManaText: TextView
+    private lateinit var playerStatsContainer: LinearLayout
 
     private var turnManager = TurnManager()
 
@@ -61,10 +64,10 @@ class BattleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         enemySprite = view.findViewById(R.id.enemySprite)
-        skillsContainer = view.findViewById(R.id.skillsContainer)
         openSkillButton = view.findViewById(R.id.openSkillButton)
         battleMessage = view.findViewById(R.id.battleMessage)
         enemyHealthBar = view.findViewById(R.id.enemyHealthbar)
+        monsterHealthText = view.findViewById(R.id.monsterHealthText)
         attackButton = view.findViewById(R.id.attackButton)
         defenseButton = view.findViewById(R.id.defenseButton)
         enemyName = view.findViewById(R.id.enemyName)
@@ -74,6 +77,7 @@ class BattleFragment : Fragment() {
         playerHealthText = view.findViewById(R.id.playerHealthText)
         playerManaBar = view.findViewById(R.id.playerManaBar)
         playerManaText = view.findViewById(R.id.playerManaText)
+        playerStatsContainer = view.findViewById(R.id.playerStatsContainer)
 
         setupButtons()
         observeGame()
@@ -91,15 +95,10 @@ class BattleFragment : Fragment() {
             gameViewModel.performPlayerAction(PlayerAction.DEFENCE)
             setActionButtonsVisible(false)
             setNextButtonVisible(true)
-            SfxManager.play("button")
+            SfxManager.play("defence")
         }
         openSkillButton.setOnClickListener {
-            if (skillsContainer.isGone) {
-                populateSkills()
-                skillsContainer.visibility = View.VISIBLE
-            } else {
-                skillsContainer.visibility = View.GONE
-            }
+                showSkillDialog()
             SfxManager.play("button")
         }
         nextButton.setOnClickListener {
@@ -109,36 +108,6 @@ class BattleFragment : Fragment() {
             setNextButtonVisible(false)
         }
     }
-
-    private fun populateSkills() {
-        skillsContainer.removeAllViews()
-        val player = gameViewModel.player.value ?: return
-        for (skill in player.skills) {
-            val btn = Button(requireContext()).apply {
-                text = skill.name
-                setOnClickListener {
-                    val currentPlayer = gameViewModel.player.value ?: return@setOnClickListener
-                    val manaRemain = currentPlayer.mana
-                    if(manaRemain >= (skill.manaCost)){
-                        gameViewModel.performPlayerAction(PlayerAction.SKILL, skill)
-                        skillsContainer.visibility = View.GONE
-                        setActionButtonsVisible(false)
-                        setNextButtonVisible(true)
-                        SfxManager.play(skill.name)
-                        if(skill.name.lowercase() != "heal"){
-                            VisualEffect.play(skill.name, enemySprite)
-                        }
-                    }
-                    else{
-                        battleMessage.text = "Didn't have enough mana"
-                        SfxManager.play("decline")
-                    }
-                }
-            }
-            skillsContainer.addView(btn)
-        }
-    }
-
 
     private fun observeGame() {
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
@@ -169,14 +138,20 @@ class BattleFragment : Fragment() {
                 enemyHealthBar.max = monster.maxHealth
                 enemyHealthBar.progress = monster.health
 
+                monsterHealthText.text = "${monster.health}/${monster.maxHealth}"
+
                 if (monster.health <= 0) {
-                    mainViewModel.navigateTo(Screen.Gacha)
+                    showWinPopup(monster.name)
                 }
             }
         }
 
         gameViewModel.battleMessage.observe(viewLifecycleOwner) { message ->
             battleMessage.text = message
+        }
+        gameViewModel.player.observe(viewLifecycleOwner){player->
+            playerManaText.text = "${player.mana}/${player.maxMana}"
+            playerHealthText.text = "${player.health}/${player.maxHealth}"
         }
     }
 
@@ -185,11 +160,83 @@ class BattleFragment : Fragment() {
         attackButton.visibility = visibility
         defenseButton.visibility = visibility
         openSkillButton.visibility = visibility
-        skillsContainer.visibility = visibility
+        playerStatsContainer.visibility = visibility
     }
 
     private fun setNextButtonVisible(visible: Boolean) {
         nextButton.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    private fun showWinPopup(monsterName: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_victory, null)
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        dialogView.findViewById<TextView>(R.id.victoryMessage).text =
+            "You defeated $monsterName!"
+
+        dialogView.findViewById<Button>(R.id.btnOk).setOnClickListener {
+            dialog.dismiss()
+            mainViewModel.navigateTo(Screen.Gacha)
+        }
+        dialog.setCanceledOnTouchOutside(false)
+        // Hilangkan background putih default dialog
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
+    private fun showSkillDialog() {
+        val player = gameViewModel.player.value ?: return
+        val dialogView = layoutInflater.inflate(R.layout.dialog_skills, null)
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        val skillsContainer = dialogView.findViewById<LinearLayout>(R.id.skillsListContainer)
+
+        // Tambahkan tombol untuk setiap skill
+        for (skill in player.skills) {
+            val btn = Button(requireContext()).apply {
+                text = skill.name
+                setOnClickListener {
+                    val currentPlayer = gameViewModel.player.value ?: return@setOnClickListener
+                    val manaRemain = currentPlayer.mana
+                    if (manaRemain >= skill.manaCost) {
+                        gameViewModel.performPlayerAction(PlayerAction.SKILL, skill)
+
+                        // Tutup dialog
+                        dialog.dismiss()
+
+                        setActionButtonsVisible(false)
+                        setNextButtonVisible(true)
+                        SfxManager.play(skill.name)
+
+                        if (skill.name.lowercase() != "heal") {
+                            enemySprite?.let { sprite ->
+                                VisualEffect.play(skill.name, sprite)
+                            }
+                        }
+                    } else {
+                        battleMessage?.text = "Didn't have enough mana"
+                        SfxManager.play("decline")
+                    }
+                }
+            }
+            skillsContainer.addView(btn)
+        }
+
+        // Tombol Cancel di bawah daftar skill
+        dialogView.findViewById<Button>(R.id.btnCloseSkillDialog).setOnClickListener {
+            SfxManager.play("button")
+            dialog.dismiss()
+        }
+
+        dialog.setCanceledOnTouchOutside(false)
+
+        // Hilangkan background putih default
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 }
 

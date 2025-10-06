@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@drawable/bg_dialog_victory"
+    android:layout_gravity="center">
+
+<!--    <ImageView-->
+<!--        android:id="@+id/victoryIcon"-->
+<!--        android:layout_width="64dp"-->
+<!--        android:layout_height="64dp"-->
+<!--&lt;!&ndash;        android:src="@drawable/ic_trophy"&ndash;&gt;-->
+<!--        android:contentDescription="Victory Icon"-->
+<!--        android:layout_marginBottom="8dp" />-->
+
+    <TextView
+        android:id="@+id/victoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Victory!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/victoryMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You defeated the monster!"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:textStyle="bold"/>
+</LinearLayout>
