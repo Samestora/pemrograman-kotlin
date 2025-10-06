@@ -16,8 +16,7 @@ import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.domain.save.GameProgress
 
 class MenuFragment : Fragment() {
-
-    private val viewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var dungeonName : TextView
     private lateinit var highestScore : TextView
 
@@ -42,12 +41,12 @@ class MenuFragment : Fragment() {
         view.findViewById<ImageButton>(R.id.newGameButton).setOnClickListener {
             SfxManager.play("play")
             MusicManager.stop("main_menu")
-            viewModel.navigateTo(Screen.Rest)
+            mainViewModel.navigateTo(Screen.Rest)
             SfxManager.play("button")
         }
 
         view.findViewById<ImageButton>(R.id.settingImageButton).setOnClickListener {
-            viewModel.navigateTo(Screen.Settings)
+            mainViewModel.navigateTo(Screen.Settings)
             SfxManager.play("button")
         }
     }

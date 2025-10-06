@@ -19,10 +19,8 @@ import com.sgdc.roguelike.ui.fragment.GachaFragment
 import com.sgdc.roguelike.ui.fragment.MenuFragment
 import com.sgdc.roguelike.ui.fragment.RestFragment
 import com.sgdc.roguelike.ui.fragment.SettingsFragment
-import com.sgdc.roguelike.ui.fragment.StoreFragment
 
 class MainActivity : AppCompatActivity() {
-
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,10 +54,18 @@ class MainActivity : AppCompatActivity() {
                 Screen.Death -> DeathFragment()
                 Screen.Settings -> SettingsFragment()
                 Screen.Gacha -> GachaFragment()
-                Screen.Store -> StoreFragment()
             }
 
+            val fade = android.transition.TransitionInflater.from(this)
+                .inflateTransition(R.transition.fade)
+
+            fragment.enterTransition = fade
+            fragment.exitTransition = fade
+            fragment.reenterTransition = fade
+            fragment.returnTransition = fade
+
             supportFragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
                 .replace(R.id.fragmentContainer, fragment)
                 .commit()
         }

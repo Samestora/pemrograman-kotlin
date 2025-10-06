@@ -57,17 +57,12 @@ class RestFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.storeBtn)?.setOnClickListener {
-            mainViewModel.navigateTo(Screen.Store)
+            StoreDialogFragment().show(parentFragmentManager, "StoreDialog")
             SfxManager.play("button")
         }
 
         view.findViewById<Button>(R.id.itemBtn)?.setOnClickListener {
-            if (itemsContainer.isGone) {
-                populateItems()
-                itemsContainer.visibility = View.VISIBLE
-            } else {
-                itemsContainer.visibility = View.GONE
-            }
+            ItemDialogFragment().show(parentFragmentManager, "ItemDialog")
             SfxManager.play("button")
         }
     }
