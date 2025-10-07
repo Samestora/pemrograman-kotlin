@@ -50,17 +50,42 @@ class PlayerStatsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Access views directly from the binding object - no more findViewById!
         binding.btnCloseStats.setOnClickListener { dismiss() }
 
-        // Observe player data from ViewModel
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
             binding.tvPlayerClass.text = player.name
             binding.tvPlayerHealth.text = "${player.health} / ${player.maxHealth}"
             binding.tvPlayerMana.text = "${player.mana} / ${player.maxMana}"
-            binding.tvPlayerAttack.text = player.att.toString() // Ensure values are strings
+            binding.tvPlayerAttack.text = player.att.toString()
             binding.tvPlayerDefense.text = player.def.toString()
             binding.tvPlayerGold.text = player.money.toString()
+
+            // Update skill section
+            val skillContainer = binding.layoutPlayerSkills
+            val noSkillText = binding.tvNoSkills
+            skillContainer.removeAllViews()
+
+            if (player.skills.isNotEmpty()) {
+                noSkillText.visibility = View.GONE
+                player.skills.forEach { skill ->
+                    val tvSkill = TextView(requireContext()).apply {
+                        text = "• ${skill.name}"
+                        setTextColor(resources.getColor(android.R.color.white))
+                        textSize = 16f
+                        setPadding(0, 6, 0, 6)
+                        setOnClickListener {
+                            SkillDescriptionDialogFragment.newInstance(
+                                skill.name,
+                                skill.manaCost,
+                                skill.description
+                            ).show(parentFragmentManager, "SkillDescriptionDialog")
+                        }
+                    }
+                    skillContainer.addView(tvSkill)
+                }
+            } else {
+                noSkillText.visibility = View.VISIBLE
+            }
         }
     }
 
