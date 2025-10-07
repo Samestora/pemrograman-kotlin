@@ -16,6 +16,9 @@ object MusicManager : Sound {
         muted = !SettingsManager.isMusicEnabled(context)
         musicMap["main_menu"] = R.raw.main_menu
         musicMap["death_screen"] = R.raw.death_screen_ochiba
+        musicMap["rest"] = R.raw.rest
+        musicMap["battle"] = R.raw.battle
+        musicMap["boss"] = R.raw.boss
     }
 
     override fun play(name: String?) {

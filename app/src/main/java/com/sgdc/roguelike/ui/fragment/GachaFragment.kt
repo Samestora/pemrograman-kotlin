@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.sgdc.roguelike.R
+import com.sgdc.roguelike.domain.bgm.MusicManager
 import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.domain.save.GameProgress
 import com.sgdc.roguelike.ui.viewmodel.GameViewModel
@@ -56,6 +57,7 @@ class GachaFragment : Fragment() {
         btnOk.visibility = View.INVISIBLE
         nextStageButton.setOnClickListener {
             SfxManager.play("button")
+            MusicManager.play("rest")
             mainViewModel.navigateTo(Screen.Rest)
         }
 

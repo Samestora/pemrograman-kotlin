@@ -35,11 +35,17 @@ class RestFragment : Fragment() {
         gameViewModel.playerRest()
 
         val restStatBonus = view.findViewById<TextView>(R.id.restHeal)
+        val currentFloor = view.findViewById<TextView>(R.id.currentFloor)
 
         // Observe player stats and update heal message
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            restStatBonus.text = "+20 HP & +10 MP"
+            restStatBonus.text = "Gain 20 HP & 10 MP"
         }
+
+        gameViewModel.stageFloor.observe(viewLifecycleOwner) { stageFloor ->
+            currentFloor.text = "Floor $stageFloor"
+        }
+
 
         view.findViewById<ImageButton>(R.id.btnInspect)?.setOnClickListener {
             PlayerStatsDialogFragment().show(parentFragmentManager, "PlayerStatsDialog")

@@ -3,6 +3,7 @@ package com.sgdc.roguelike.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.sgdc.roguelike.domain.bgm.MusicManager
 import com.sgdc.roguelike.domain.character.Monster
 import com.sgdc.roguelike.domain.character.MonsterRegistry
 import com.sgdc.roguelike.domain.character.MonsterRegistry.init
@@ -44,6 +45,7 @@ class GameViewModel : ViewModel() {
 
     fun spawnMonster() {
         turnManager.resetTurn()
+        MusicManager.stop("rest")
         val currentFloor = _stageFloor.value ?: 1
 
         // This calculates the area (0 for floors 1-4, 1 for floors 5-9, etc.)
@@ -52,9 +54,11 @@ class GameViewModel : ViewModel() {
         // Use an 'if' expression to decide which monster to get
         val newMonster = if (currentFloor % 5 == 0 && currentFloor != 0) {
             // This is a boss floor
+            MusicManager.play("boss")
             MonsterRegistry.getBuffedRandomBoss(currentFloor, currentArea)
         } else {
             // This is a regular floor
+            MusicManager.play("battle")
             MonsterRegistry.getBuffedRandomMonster(currentFloor, currentArea)
         }
 
@@ -209,7 +213,6 @@ class GameViewModel : ViewModel() {
             println(player.health)
             player.health = (player.health + 20).coerceAtMost(player.maxHealth)
             println(player.health)
-            player.money += 2000
             player.mana = (player.mana + 10).coerceAtMost(player.maxMana)
             updatePlayer(player)
         }

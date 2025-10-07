@@ -39,6 +39,8 @@ class DeathFragment : Fragment() {
         btnNext = view.findViewById(R.id.btnNext)
 
         btnNext.setOnClickListener {
+            MusicManager.stop("death_screen")
+            MusicManager.play("main_menu")
             mainViewModel.navigateTo(Screen.Menu)
         }
     }

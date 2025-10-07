@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.sgdc.roguelike.ui.viewmodel.GameViewModel
 import com.sgdc.roguelike.R
+import com.sgdc.roguelike.domain.bgm.MusicManager
 import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.domain.turn.PlayerAction
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
@@ -175,6 +176,8 @@ class BattleFragment : Fragment() {
             "You defeated $monsterName!"
 
         dialogView.findViewById<Button>(R.id.btnOk).setOnClickListener {
+            MusicManager.stop("battle")
+            MusicManager.stop("boss")
             dialog.dismiss()
             mainViewModel.navigateTo(Screen.Gacha)
         }
@@ -216,6 +219,7 @@ class BattleFragment : Fragment() {
                             }
                         }
                     } else {
+                        dialog.dismiss()
                         battleMessage?.text = "Didn't have enough mana"
                         SfxManager.play("decline")
                     }

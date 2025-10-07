@@ -52,8 +52,8 @@ class PlayerStatsDialogFragment : DialogFragment() {
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
             // This part remains the same
             binding.tvPlayerClass.text = player.name
-            binding.tvPlayerHealth.text = "${player.health} / ${player.maxHealth}"
-            binding.tvPlayerMana.text = "${player.mana} / ${player.maxMana}"
+            binding.tvPlayerHealth.text = "HP: ${player.health} / ${player.maxHealth}"
+            binding.tvPlayerMana.text = "MP: ${player.mana} / ${player.maxMana}"
             binding.tvPlayerAttack.text = player.att.toString()
             binding.tvPlayerDefense.text = player.def.toString()
             binding.tvPlayerGold.text = player.money.toString()

@@ -25,7 +25,8 @@ object SfxManager : Sound {
 
         soundMap["play"] = soundPool.load(context, R.raw.sfx_play_button, 1)
         soundMap["Fireball"] = soundPool.load(context, R.raw.sfx_skill_fireball, 1)
-        soundMap["slash"] = soundPool.load(context, R.raw.sfx_skill_slash, 1)
+        soundMap["Slash"] = soundPool.load(context, R.raw.sfx_skill_slash, 1)
+
         soundMap["attack"] = soundPool.load(context, R.raw.sfx_basic_attack, 1)
         soundMap["buy"] = soundPool.load(context, R.raw.sfx_buying, 1)
         soundMap["button"] = soundPool.load(context, R.raw.sfx_button, 1)
