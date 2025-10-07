@@ -1,5 +1,7 @@
 package com.sgdc.roguelike.domain.character
 
+import com.sgdc.roguelike.domain.skill.Skill
+
 class Monster(
     name: String,
     health: Int,
@@ -9,6 +11,7 @@ class Monster(
     mana: Int,
     maxMana: Int,
     val spriteName: String,
+    val skills: List<Skill> = emptyList()
 ) : Character(name, health, maxHealth, att, def, mana, maxMana) {
 
     override fun attack(target: Character) {

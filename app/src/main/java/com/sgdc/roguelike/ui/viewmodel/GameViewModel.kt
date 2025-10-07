@@ -133,10 +133,22 @@ class GameViewModel : ViewModel() {
         _battleMessage.value = "${currentMonster.name} braces for impact!"
     }
 
-    fun monsterUseSkill(){
+    fun monsterUseSkill() {
         val currentMonster = _monster.value ?: return
-        _battleMessage.value = "${currentMonster.name} use skill"
+        val currentPlayer = _player.value ?: return
+
+        val skills = currentMonster.skills
+        if (skills.isEmpty()) {
+            currentMonster.attack(currentPlayer)
+            _battleMessage.value = "${currentMonster.name} attacked ${currentPlayer.name}!"
+            return
+        }
+        // Pilih skill secara acak (atau sesuai logika tertentu)
+        val skill = skills.random()
+        val resultMessage = skill.use(currentMonster, currentPlayer)
+        _battleMessage.value = "${currentMonster.name} used ${skill.name}! $resultMessage"
     }
+
 
     fun <T : Skill> playerAddSkill(skillClass: KClass<T>) {
         _player.value?.let { player ->
