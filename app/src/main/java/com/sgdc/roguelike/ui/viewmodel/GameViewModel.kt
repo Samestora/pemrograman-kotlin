@@ -171,6 +171,9 @@ class GameViewModel : ViewModel() {
         // Pilih skill secara acak (atau sesuai logika tertentu)
         val skill = skills.random()
         val resultMessage = skill.use(currentMonster, currentPlayer)
+
+        updatePlayer(currentPlayer)
+        updateMonster(currentMonster)
         _battleMessage.value = "${currentMonster.name} used ${skill.name}! $resultMessage"
     }
 
