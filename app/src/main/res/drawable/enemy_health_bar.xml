@@ -1,30 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/enemyHealthBarContainer"
-             android:layout_width="250dp"
-             android:layout_height="25dp"
-             android:background="#3D3D3D"
-             android:clipToPadding="false"
-             android:clipChildren="false"
-             android:padding="2dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/enemyHealthBarContainer"
+    android:layout_width="250dp"
+    android:layout_height="25dp"
+    android:orientation="horizontal"
+    android:background="#3D3D3D"
+    android:padding="2dp"
+    android:clipToPadding="false"
+    android:clipChildren="false">
 
     <!-- Left half -->
     <View
         android:id="@+id/leftBar"
-        android:layout_width="50%"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:background="@drawable/gradient_left"
-        android:scaleX="1" />
+        android:layout_weight="1"
+        android:background="@drawable/gradient_left" />
 
     <!-- Right half -->
     <View
         android:id="@+id/rightBar"
-        android:layout_width="50%"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:background="@drawable/gradient_right"
-        android:scaleX="1" />
+        android:layout_weight="1"
+        android:background="@drawable/gradient_right" />
 
+    <!-- Text on top -->
     <TextView
         android:id="@+id/monsterHealthText"
         android:layout_width="match_parent"
@@ -33,5 +33,8 @@
         android:text="100 / 100"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:textSize="14sp" />
-</FrameLayout>
+        android:textSize="14sp"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center"
+        android:elevation="4dp" />
+</LinearLayout>
