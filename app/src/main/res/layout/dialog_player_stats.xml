@@ -1,96 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="24dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/playerStatsContainer"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/dialog_bg"
+              android:orientation="vertical"
+              android:padding="24dp"
+              android:gravity="center_horizontal">
 
+    <!-- Health / Mana -->
     <LinearLayout
-        android:id="@+id/playerStatsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/dialog_bg"
-        android:padding="20dp"
-        android:gravity="center_horizontal">
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="8dp">
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/tvStatsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Player Stats"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="20dp" />
-
-        <!-- Player Name -->
-        <TextView
-            android:id="@+id/tvPlayerClass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Class: Nameless"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_marginBottom="6dp"/>
-
-        <!-- Health -->
         <TextView
             android:id="@+id/tvPlayerHealth"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Health: 80 / 100"
-            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:text="80 / 100"
+            android:textColor="#F08787"
             android:textSize="18sp"
-            android:layout_marginBottom="6dp"/>
+            android:textStyle="bold" />
 
-        <!-- Mana -->
         <TextView
             android:id="@+id/tvPlayerMana"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Mana: 40 / 60"
-            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:text="40 / 60"
+            android:textAlignment="textEnd"
+            android:textColor="#00838F"
             android:textSize="18sp"
-            android:layout_marginBottom="6dp"/>
+            android:textStyle="bold" />
+    </LinearLayout>
 
-        <!-- Attack -->
+    <!-- Class -->
+    <TextView
+        android:id="@+id/tvPlayerClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="Nameless"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+    <!-- Player Image -->
+    <ImageView
+        android:id="@+id/ivVetruvian"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/vetruvian"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Stats Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Attack"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Defense"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Gold"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- Stats Values -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginBottom="12dp">
+
         <TextView
             android:id="@+id/tvPlayerAttack"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Attack: 12"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="12"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_marginBottom="6dp"/>
+            android:textSize="18sp" />
 
-        <!-- Defense -->
         <TextView
             android:id="@+id/tvPlayerDefense"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Defense: 8"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="8"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_marginBottom="6dp"/>
+            android:textSize="18sp" />
 
-
-        <!-- Gold -->
         <TextView
             android:id="@+id/tvPlayerGold"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Gold: 230"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="230"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Close Button -->
-        <Button
-            android:id="@+id/btnCloseStats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Close" />
+            android:textSize="18sp" />
     </LinearLayout>
-</ScrollView>
+
+    <!-- Close Button -->
+    <Button
+        android:id="@+id/btnCloseStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#555"
+        android:textColor="@android:color/white" />
+</LinearLayout>

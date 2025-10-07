@@ -4,6 +4,7 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
+                                                   android:padding="10dp"
                                                    tools:context=".MainActivity">
 
     <!-- Top: Highscore and Settings -->
@@ -41,7 +42,7 @@
             android:layout_gravity="center">
 
             <ImageButton
-                android:id="@+id/newGameButton"
+                android:id="@+id/btnNewGame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
@@ -50,7 +51,7 @@
                 android:src="@drawable/bg_main_menu_dungeon"
             />
             <TextView
-                android:id="@+id/dungeonName"
+                android:id="@+id/tvEmbarkDungeon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8sp"
@@ -71,7 +72,7 @@
                 android:layout_height="120dp" android:layout_gravity="start|fill_horizontal" android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/continueButton"
+                    android:id="@+id/btnContinue"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -82,7 +83,8 @@
                 <TextView
                     android:id="@+id/tvContinue"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:layout_margin="8sp" android:text="Continue : Floor 15"
+                    android:layout_height="wrap_content" android:layout_margin="8sp"
+                    android:text="New Dungeon Coming Soon!"
                     android:textColor="#000000" android:textSize="16sp" android:textStyle="bold"/>
             </FrameLayout>
 
@@ -93,7 +95,7 @@
                 android:layout_weight="2">
 
                 <ImageButton
-                    android:id="@+id/settingsButton"
+                    android:id="@+id/btnSettings"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -119,7 +121,7 @@
                 android:layout_width="match_parent" android:layout_height="match_parent"
                 app:srcCompat="@drawable/bg_main_menu"/>
             <TextView
-                android:id="@+id/highscoreText"
+                android:id="@+id/tvHighscore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8sp"

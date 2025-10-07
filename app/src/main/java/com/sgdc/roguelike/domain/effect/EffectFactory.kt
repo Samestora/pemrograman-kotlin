@@ -1,4 +1,4 @@
-package com.sgdc.roguelike.effect
+package com.sgdc.roguelike.domain.effect
 
 object EffectFactory {
     fun createEffect(name: String): Effect?{

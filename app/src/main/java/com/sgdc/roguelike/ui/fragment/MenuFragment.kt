@@ -14,11 +14,18 @@ import com.sgdc.roguelike.R
 import com.sgdc.roguelike.ui.viewmodel.Screen
 import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.domain.save.GameProgress
+import com.sgdc.roguelike.ui.viewmodel.GameViewModel
 
 class MenuFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
-    private lateinit var dungeonName : TextView
-    private lateinit var highestScore : TextView
+    private val gameViewModel: GameViewModel by activityViewModels()
+
+    private lateinit var tvEmbarkDungeon: TextView
+    private lateinit var tvHighscore: TextView
+    private lateinit var tvContinue: TextView
+    private lateinit var btnNewGame: ImageButton
+    private lateinit var btnContinue: ImageButton
+    private lateinit var btnSettings: ImageButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,22 +37,25 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dungeonName = view.findViewById(R.id.dungeonName)
-        highestScore = view.findViewById(R.id.highestscoreText)
+        tvEmbarkDungeon = view.findViewById(R.id.tvEmbarkDungeon)
+        tvHighscore = view.findViewById(R.id.tvHighscore)
+        btnNewGame = view.findViewById(R.id.btnNewGame)
+        btnContinue = view.findViewById(R.id.btnContinue)
+        btnSettings = view.findViewById(R.id.btnSettings)
+        tvContinue = view.findViewById(R.id.tvContinue)
 
-        val highestScoreSave : Int = GameProgress.getHighScore(requireContext())
-        dungeonName.text = "Embark : Dark Forest"
-        highestScore.text = getString(R.string.highest_floor, highestScoreSave.toString())
+        tvEmbarkDungeon.text = "Embark: Dark Forest"
+        tvHighscore.text = "Highscore : Dark Forest ${GameProgress.getHighScore(requireContext())}"
 
-
-        view.findViewById<ImageButton>(R.id.newGameButton).setOnClickListener {
+        view.findViewById<ImageButton>(R.id.btnNewGame).setOnClickListener {
             SfxManager.play("play")
             MusicManager.stop("main_menu")
             mainViewModel.navigateTo(Screen.Rest)
+            gameViewModel.resetGame()
             SfxManager.play("button")
         }
 
-        view.findViewById<ImageButton>(R.id.settingImageButton).setOnClickListener {
+        view.findViewById<ImageButton>(R.id.btnSettings).setOnClickListener {
             mainViewModel.navigateTo(Screen.Settings)
             SfxManager.play("button")
         }

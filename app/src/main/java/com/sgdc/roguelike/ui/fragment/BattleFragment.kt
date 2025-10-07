@@ -20,14 +20,9 @@ import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.domain.turn.PlayerAction
 import com.sgdc.roguelike.ui.viewmodel.MainViewModel
 import com.sgdc.roguelike.ui.viewmodel.Screen
-import androidx.core.view.isGone
 import com.sgdc.roguelike.domain.character.MonsterRegistry
-import com.sgdc.roguelike.domain.item.Item
-import com.sgdc.roguelike.domain.skill.Skill
-import com.sgdc.roguelike.domain.turn.Turn
 import com.sgdc.roguelike.domain.turn.TurnManager
-import com.sgdc.roguelike.domain.turn.TurnResult
-import com.sgdc.roguelike.effect.VisualEffect
+import com.sgdc.roguelike.domain.effect.VisualEffect
 
 class BattleFragment : Fragment() {
 

@@ -11,6 +11,7 @@ class Monster(
     mana: Int,
     maxMana: Int,
     val spriteName: String,
+    val isBoss : Boolean,
     val skills: List<Skill> = emptyList()
 ) : Character(name, health, maxHealth, att, def, mana, maxMana) {
 

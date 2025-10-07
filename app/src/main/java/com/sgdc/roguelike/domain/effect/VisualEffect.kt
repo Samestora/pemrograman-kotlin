@@ -1,4 +1,4 @@
-package com.sgdc.roguelike.effect
+package com.sgdc.roguelike.domain.effect
 
 import android.view.View
 

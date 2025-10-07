@@ -2,6 +2,10 @@ package com.sgdc.roguelike.domain.save
 
 import android.content.Context
 import androidx.core.content.edit
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.sgdc.roguelike.domain.character.Monster
+import com.sgdc.roguelike.domain.character.Player
 
 object GameProgress {
     private const val PREFS_NAME = "game_progress"
@@ -14,7 +18,9 @@ object GameProgress {
 
     fun setHighScore(context: Context, value: Int) {
         val prefs = context.getSharedPreferences(GameProgress.PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit { putInt(KEY_HIGHSCORE, value) }
+        if (getHighScore(context) < value) {
+            prefs.edit { putInt(KEY_HIGHSCORE, value) }
+        }
     }
 
 }

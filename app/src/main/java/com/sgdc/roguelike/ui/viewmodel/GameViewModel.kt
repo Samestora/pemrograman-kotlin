@@ -15,11 +15,12 @@ import com.sgdc.roguelike.domain.turn.MonsterAction
 import com.sgdc.roguelike.domain.turn.PlayerAction
 import com.sgdc.roguelike.domain.turn.Turn
 import com.sgdc.roguelike.domain.turn.TurnManager
+import kotlin.math.floor
 import kotlin.reflect.KClass
 
 class GameViewModel : ViewModel() {
     private val _player = MutableLiveData(
-        Player("Player", 50, 100, 10, 5, 20, 20)
+        Player("Player", 100, 100, 10, 5, 20, 20)
     )
     val player: LiveData<Player> = _player
 
@@ -39,13 +40,37 @@ class GameViewModel : ViewModel() {
     // --------------------
     // BATTLE FLOW
     // --------------------
+// In your GameViewModel.kt
+
     fun spawnMonster() {
         turnManager.resetTurn()
-        val baseMonster = MonsterRegistry.randomMonster()
-        val buffed = MonsterRegistry.buffMonster(baseMonster, _stageFloor.value ?: 1)
-        _monster.value = buffed
-        _battleMessage.value = "${_monster.value?.name} has appeared!"
+        val currentFloor = _stageFloor.value ?: 1
+
+        // This calculates the area (0 for floors 1-4, 1 for floors 5-9, etc.)
+        val currentArea = (currentFloor - 1) / 5
+
+        // Use an 'if' expression to decide which monster to get
+        val newMonster = if (currentFloor % 5 == 0 && currentFloor != 0) {
+            // This is a boss floor
+            MonsterRegistry.getBuffedRandomBoss(currentFloor, currentArea)
+        } else {
+            // This is a regular floor
+            MonsterRegistry.getBuffedRandomMonster(currentFloor, currentArea)
+        }
+
+        _monster.value = newMonster
+        _battleMessage.value = "${newMonster.name} has appeared!"
         _battleFinished.value = false
+    }
+
+    fun updateStageFloor(value: Int) {
+        _stageFloor.value = value
+    }
+
+    fun resetGame() {
+        _player.value = Player("Player", 100, 100, 10, 5, 20, 20)
+        _monster.value = null
+        _stageFloor.value = 0
     }
 
     fun finishBattle() {

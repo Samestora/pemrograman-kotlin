@@ -4,10 +4,47 @@
                                                    android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginTop="32sp" android:text="Game Over"
+        android:textAlignment="center" android:textSize="32sp"
+        android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:id="@+id/ivDeath"
+        android:layout_width="match_parent" android:layout_height="250dp"
+        android:layout_margin="32dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" app:srcCompat="@drawable/death"/>
+    <TextView
         android:id="@+id/deathMessage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-        tools:text="You died"/>
+        android:layout_height="wrap_content" android:layout_marginTop="16dp"
+        android:text="You died"
+        android:textSize="20sp" android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/ivDeath"
+        app:layout_constraintVertical_bias="0.0" tools:text="You died"/>
+    <TextView
+        android:id="@+id/tvDeathDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:text="Your breath fades, swallowed by the silence of the deep.\n
+The dungeon does not mourn — it only hungers.\n
+Your name will vanish like dust upon the stone.\n
+Yet as your corpse decays, another foolish soul steps forward, chasing the same doomed dream."
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deathMessage"/>
+    <Button
+        android:id="@+id/btnNext"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="End Journey" android:textAlignment="center"
+        android:textStyle="bold" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDeathDescription"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

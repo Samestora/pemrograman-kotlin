@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="10dp"
     tools:context=".ui.fragment.RestFragment">
 
-    <!-- Resting Message -->
     <TextView
         android:id="@+id/restMessage"
         android:layout_width="wrap_content"
@@ -17,87 +16,142 @@
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Heal and Mana messages -->
     <TextView
         android:id="@+id/restHeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="You heal for..."
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="+20 HP +10 MP"
+        app:layout_constraintTop_toBottomOf="@id/restMessage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/restMessage"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/statsBtn"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:text="Stats"
-        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35000002"/>
-
-    <!-- Skill gain -->
-
-    <!-- Store and Item buttons -->
     <LinearLayout
-        android:id="@+id/buttonRow"
-        android:layout_width="wrap_content"
+        android:id="@+id/centerMenu"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="16dp"
+        android:orientation="vertical"
         android:gravity="center"
-        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/statsBtn"
-        app:layout_constraintVertical_bias="0.25">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
-            android:id="@+id/storeBtn"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:text="Store"/>
+        <FrameLayout
+            android:id="@+id/frameInspect"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
 
-        <Button
-            android:id="@+id/itemBtn"
-            android:layout_width="140dp"
+            <ImageButton
+                android:id="@+id/btnInspect"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:contentDescription="Inspect Stats"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_rest_inspect"
+            />
+
+            <TextView
+                android:id="@+id/tvInpect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Inspect Stats"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Use Item"/>
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/btnStore"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@null"
+                    android:src="@drawable/bg_rest_store"
+                    android:contentDescription="Visit Store" />
+
+                <TextView
+                    android:id="@+id/tvStore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Visit Store"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp">
+
+                <ImageButton
+                    android:id="@+id/btnBackpack"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@null"
+                    android:src="@drawable/bg_rest_backpack"
+                    />
+
+                <TextView
+                    android:id="@+id/tvBackpack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Backpack"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp">
+
+            <ImageButton
+                android:id="@+id/btnContinue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_main_menu_dungeon"/>
+
+            <TextView
+                android:id="@+id/tvContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Continue"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
     </LinearLayout>
-
-    <!-- Next stage button -->
-    <FrameLayout
-        android:id="@+id/nextStage"
-        android:layout_width="200dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/buttonRow">
-
-        <ImageButton
-            android:id="@+id/nextStageButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:contentDescription="Next Stage"
-            android:scaleType="fitXY"
-            android:src="@drawable/textured_button"/>
-
-        <TextView
-            android:id="@+id/nextStageText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Next Stage"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-    </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

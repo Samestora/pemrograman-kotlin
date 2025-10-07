@@ -27,13 +27,10 @@ class Heal : Skill {
     override val description = "Cast heal"
     override val manaCost = 20
     override fun use(user: Character, target: Character): String {
-        if (user is Player) {
-            val healAmount = 20
-            val oldHealth = user.health
-            user.health = (user.health + healAmount).coerceAtMost(user.maxHealth)
-            return "Healed ${user.health - oldHealth} HP!"
-        }
-        return "$name had no effect."
+        val healAmount = 20
+        val oldHealth = user.health
+        user.health = (user.health + healAmount).coerceAtMost(user.maxHealth)
+        return "Healed ${user.health - oldHealth} HP!"
     }
 }
 

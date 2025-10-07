@@ -23,8 +23,6 @@ class RestFragment : Fragment() {
     private val gameViewModel: GameViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
-    private lateinit var itemsContainer : LinearLayout
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,52 +32,37 @@ class RestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        gameViewModel.playerRest()
 
-        // Show player stats after rest
         val restStatBonus = view.findViewById<TextView>(R.id.restHeal)
-        itemsContainer = view.findViewById(R.id.itemContainer)
 
+        // Observe player stats and update heal message
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            restStatBonus.text = getString(R.string.rest_heal_message, player.health, player.maxHealth)
-            restStatBonus?.text = "+20 HP & 10 MP"
+            restStatBonus.text = "+20 HP & +10 MP"
         }
 
-        // Handle "Next Stage"
-        view.findViewById<ImageButton>(R.id.nextStageButton)?.setOnClickListener {
-            gameViewModel.resetBattle()
-            mainViewModel.navigateTo(Screen.Battle)
-        }
-
-        view.findViewById<Button>(R.id.statsBtn)?.setOnClickListener {
+        view.findViewById<ImageButton>(R.id.btnInspect)?.setOnClickListener {
             PlayerStatsDialogFragment().show(parentFragmentManager, "PlayerStatsDialog")
             SfxManager.play("button")
         }
 
-        view.findViewById<Button>(R.id.storeBtn)?.setOnClickListener {
+        // Visit Store
+        view.findViewById<ImageButton>(R.id.btnStore)?.setOnClickListener {
             StoreDialogFragment().show(parentFragmentManager, "StoreDialog")
             SfxManager.play("button")
         }
 
-        view.findViewById<Button>(R.id.itemBtn)?.setOnClickListener {
+        // Backpack (use potion dialog)
+        view.findViewById<ImageButton>(R.id.btnBackpack)?.setOnClickListener {
             ItemDialogFragment().show(parentFragmentManager, "ItemDialog")
             SfxManager.play("button")
         }
-    }
 
-    private fun populateItems() {
-        itemsContainer.removeAllViews()
-        val player = gameViewModel.player.value ?: return
-
-        for (inventoryItem in player.items) {
-            val btn = Button(requireContext()).apply {
-                text = "${inventoryItem.item.name} x${inventoryItem.amount}"
-                setOnClickListener {
-                    gameViewModel.playerUseItem(inventoryItem.item)
-                    itemsContainer.visibility = View.GONE
-                    SfxManager.play("button")
-                }
-            }
-            itemsContainer.addView(btn)
+        // Continue (next battle)
+        view.findViewById<ImageButton>(R.id.btnContinue)?.setOnClickListener {
+            gameViewModel.resetBattle()
+            mainViewModel.navigateTo(Screen.Battle)
+            SfxManager.play("button")
         }
     }
 }
