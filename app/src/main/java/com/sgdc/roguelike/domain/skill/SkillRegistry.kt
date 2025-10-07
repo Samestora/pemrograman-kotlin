@@ -6,7 +6,13 @@ import com.sgdc.roguelike.domain.character.Player
 object SkillRegistry {
     private val skills: List<() -> Skill> = listOf(
         { Fireball() },
-        { Heal() }
+        { Heal() },
+        { IceSpike() },
+        { ThunderStrike() },
+        { DrainLife() },
+        { FlameBurst() },
+        { Slash() },
+        { Thrust() }
     )
 
     fun allSkills(): List<Skill> = skills.map { it.invoke() }

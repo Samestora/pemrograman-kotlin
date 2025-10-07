@@ -14,7 +14,7 @@ interface Skill {
 class Fireball : Skill {
     override val name = "Fireball"
     override val description = "Cast fireball"
-    override val manaCost = 10
+    override val manaCost = 11
     override fun use(user: Character, target: Character): String {
         val damage = user.att * 2
         target.takeDamage(damage)
@@ -40,7 +40,7 @@ class Heal : Skill {
 class IceSpike : Skill {
     override val name = "Ice Spike"
     override val description = "Launch a sharp icicle to pierce the enemy."
-    override val manaCost = 12
+    override val manaCost = 8
 
     override fun use(user: Character, target: Character): String {
         val damage = (user.att * 1.8).toInt()
@@ -55,7 +55,7 @@ class ThunderStrike : Skill {
     override val manaCost = 18
 
     override fun use(user: Character, target: Character): String {
-        val damage = (user.att * 2.2).toInt()
+        val damage = (user.att * 2.7).toInt()
         target.takeDamage(damage)
         return "Dealt $damage damage to ${target.name}!"
     }
@@ -79,7 +79,7 @@ class DrainLife : Skill {
 class FlameBurst : Skill {
     override val name = "Flame Burst"
     override val description = "An explosive burst of flame that deals heavy damage."
-    override val manaCost = 16
+    override val manaCost = 14
 
     override fun use(user: Character, target: Character): String {
         val damage = (user.att * 2.3).toInt()
