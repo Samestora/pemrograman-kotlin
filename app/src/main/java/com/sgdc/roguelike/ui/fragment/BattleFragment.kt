@@ -196,7 +196,7 @@ class BattleFragment : Fragment() {
         // Tambahkan tombol untuk setiap skill
         for (skill in player.skills) {
             val btn = Button(requireContext()).apply {
-                text = skill.name
+                text = "${skill.name} - ${skill.manaCost} MP"
                 setOnClickListener {
                     val currentPlayer = gameViewModel.player.value ?: return@setOnClickListener
                     val manaRemain = currentPlayer.mana

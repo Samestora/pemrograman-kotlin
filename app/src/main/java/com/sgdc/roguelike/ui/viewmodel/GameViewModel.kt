@@ -206,7 +206,9 @@ class GameViewModel : ViewModel() {
     // --------------------
     fun playerRest() {
         _player.value?.let { player ->
+            println(player.health)
             player.health = (player.health + 20).coerceAtMost(player.maxHealth)
+            println(player.health)
             player.mana = (player.mana + 10).coerceAtMost(player.maxMana)
             updatePlayer(player)
         }
@@ -250,10 +252,19 @@ class GameViewModel : ViewModel() {
         val player = _player.value ?: return false
         if (player.money >= 100) {
             player.money -= 100
-            grantRandomSkill()
             return true
         } else {
             return false
+        }
+    }
+
+    fun grantSkill(skill: Skill) {
+        val player = _player.value ?: return
+
+        val alreadyOwned = player.skills.any { it::class == skill::class }
+        if (!alreadyOwned) {
+            player.skills.add(skill)
+            updatePlayer(player)
         }
     }
 

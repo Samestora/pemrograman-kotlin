@@ -55,7 +55,6 @@ class GachaFragment : Fragment() {
 
         btnOk.visibility = View.INVISIBLE
         nextStageButton.setOnClickListener {
-            gameViewModel.playerRest()
             SfxManager.play("button")
             mainViewModel.navigateTo(Screen.Rest)
         }
