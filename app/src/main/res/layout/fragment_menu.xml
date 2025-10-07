@@ -1,75 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
->
+                                                   tools:context=".MainActivity">
 
-    <!-- Play Game -->
+    <!-- Top: Highscore and Settings -->
+
+    <!-- Center: Game options -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/centerMenu"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical" app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:id="@+id/dungeonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="15sp"
-            android:textStyle="bold" tools:text="Embark"
-        />
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Dungeon Name -->
+
+        <!-- Play Game -->
         <FrameLayout
             android:id="@+id/playGame"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-        >
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center">
 
             <ImageButton
                 android:id="@+id/newGameButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/depositphotos_10217309_stock_photo_light_in_a_dark_forest"/>
-
+                android:contentDescription="New Game"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_main_menu_dungeon"
+            />
+            <TextView
+                android:id="@+id/dungeonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8sp"
+                android:layout_marginBottom="8dp"
+                android:text="Embark" android:textColor="#000000" android:textSize="16sp" android:textStyle="bold"/>
         </FrameLayout>
-    </LinearLayout>
 
-    <!-- Setting -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#000000"
-        android:orientation="horizontal" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="0.3"/>
-        <TextView
-            android:id="@+id/highestscoreText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|center_horizontal|center_vertical" android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView" android:textSize="24sp" android:textStyle="bold"
-            tools:text="Highest Floor : 99"/>
-        <FrameLayout
-            android:id="@+id/settingButton"
-            android:layout_width="wrap_content"
+        <!-- Continue / Settings Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-        >
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/settingImageButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center|center_horizontal|center_vertical"
-                android:background="@null"
-                android:scaleType="fitEnd" android:src="@drawable/settings"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp" android:layout_gravity="start|fill_horizontal" android:layout_weight="1">
 
+                <ImageButton
+                    android:id="@+id/continueButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:contentDescription="New Game"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_main_menu_dungeon"
+                />
+                <TextView
+                    android:id="@+id/tvContinue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_margin="8sp" android:text="Continue : Floor 15"
+                    android:textColor="#000000" android:textSize="16sp" android:textStyle="bold"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp" android:layout_gravity="fill_horizontal|end"
+                android:layout_marginStart="8dp"
+                android:layout_weight="2">
+
+                <ImageButton
+                    android:id="@+id/settingsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:contentDescription="New Game"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_main_menu_settings"
+                />
+                <TextView
+                    android:id="@+id/tvSettings"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="8sp"
+                    android:text="Settings" android:textColor="#000000" android:textSize="16sp"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Highscore -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp" android:layout_gravity="bottom" android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                app:srcCompat="@drawable/bg_main_menu"/>
+            <TextView
+                android:id="@+id/highscoreText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8sp"
+                android:text="Highscore :" android:textColor="#000" android:textSize="16sp" android:textStyle="bold"/>
         </FrameLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

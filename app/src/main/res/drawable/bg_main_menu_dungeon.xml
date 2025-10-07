@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 1️⃣ Base white background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+
+    <!-- 2️⃣ Background image aligned to the right -->
+    <item
+        android:gravity="end"
+        android:right="0dp"
+        android:top="0dp"
+        android:bottom="0dp">
+        <bitmap
+            android:src="@drawable/depositphotos_10217309_stock_photo_light_in_a_dark_forest"
+            android:alpha="1"
+            android:gravity="fill" />
+    </item>
+
+    <!-- 3️⃣ Left-to-right white gradient overlay to create the fade effect -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#FFFFFFFF"
+                android:centerColor="#CCFFFFFF"
+                android:endColor="#00FFFFFF"
+                android:angle="0" />
+        </shape>
+    </item>
+
+</layer-list>
