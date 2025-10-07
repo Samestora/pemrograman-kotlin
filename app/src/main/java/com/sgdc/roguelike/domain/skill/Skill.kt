@@ -110,7 +110,7 @@ class Slash : Skill {
 }
 
 class Thrust: Skill{
-    override val name = "Slash"
+    override val name = "Thrust"
     override val description = "A strong thrust attack."
     override val manaCost = 5
 

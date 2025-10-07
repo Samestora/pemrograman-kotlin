@@ -1,147 +1,153 @@
 package com.sgdc.roguelike.ui.fragment
 
-import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sgdc.roguelike.R
+import com.sgdc.roguelike.databinding.DialogStoreBinding
 import com.sgdc.roguelike.domain.bgm.SfxManager
 import com.sgdc.roguelike.domain.item.HealthPotion
 import com.sgdc.roguelike.domain.item.ManaPotion
-import com.sgdc.roguelike.domain.skill.Skill
-import com.sgdc.roguelike.domain.skill.SkillRegistry
+import com.sgdc.roguelike.ui.adapter.StoreAdapter
+import com.sgdc.roguelike.ui.adapter.StoreItem
 import com.sgdc.roguelike.ui.viewmodel.GameViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.getValue
 
 class StoreDialogFragment : DialogFragment() {
 
     private val gameViewModel: GameViewModel by activityViewModels()
+    private var _binding: DialogStoreBinding? = null
+    private val binding get() = _binding!!
+    private var isProcessingPurchase = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        return inflater.inflate(R.layout.dialog_store, container, false)
+        _binding = DialogStoreBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tvGold = view.findViewById<TextView>(R.id.tvGold)
-        val tvWarning = view.findViewById<TextView>(R.id.tvWarning)
-        val btnBuyHealth = view.findViewById<Button>(R.id.btnBuyHealthPotion)
-        val btnBuyMana = view.findViewById<Button>(R.id.btnBuyManaPotion)
-        val btnClose = view.findViewById<Button>(R.id.btnCloseStore)
-        val btnBuyRandomSkill = view.findViewById<Button>(R.id.btnBuyRandomSkill)
-        val textBuyRandomSkill = view.findViewById<TextView>(R.id.tvBuyRandomSkill)
+        // Setup the adapter once
+        val storeAdapter = StoreAdapter(emptyList()) // Start with an empty list
+        binding.rvStoreItems.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = storeAdapter
+        }
 
+        // --- ALL LOGIC IS NOW DRIVEN BY PLAYER DATA CHANGES ---
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            tvGold.text = "Gold: ${player.money}"
+            binding.tvGold.text = "Gold: ${player.money}"
+
+            // Create a dynamic list of items for sale
+            val itemsForSale = mutableListOf(
+                StoreItem("Health Potion", 20, R.drawable.ic_health_potion) {
+                    handlePurchase { gameViewModel.playerAddItem(HealthPotion()) }
+                },
+                StoreItem("Mana Potion", 30, R.drawable.ic_mana_potion) {
+                    handlePurchase { gameViewModel.playerAddItem(ManaPotion()) }
+                }
+            )
+
+            // Conditionally add the skill item OR show the message
             if (gameViewModel.isAllSkillsAvailable()) {
-                btnBuyRandomSkill.visibility = View.VISIBLE
+                itemsForSale.add(
+                    StoreItem("Random Skill", 100, R.drawable.ic_random_skill) {
+                        handleSkillPurchase()
+                    }
+                )
+                binding.tvAllSkillsCollected.isVisible = false // Hide message
             } else {
-                btnBuyRandomSkill.visibility = View.GONE
-                textBuyRandomSkill.text = getString(R.string.all_skill_acquired_message)
+                binding.tvAllSkillsCollected.isVisible = true // Show message
             }
+
+            // Update the adapter with the final list of items
+            storeAdapter.updateItems(itemsForSale)
         }
 
-        btnBuyHealth.setOnClickListener {
-            val success = gameViewModel.playerAddItem(HealthPotion())
-            if (!success) {
-                SfxManager.play("decline")
-                tvWarning.visibility = View.VISIBLE
-            } else {
-                SfxManager.play("buy")
-                tvWarning.visibility = View.GONE
-            }
-        }
-
-        btnBuyMana.setOnClickListener {
-            val success = gameViewModel.playerAddItem(ManaPotion())
-            if (!success) {
-                SfxManager.play("decline")
-                tvWarning.visibility = View.VISIBLE
-            } else {
-                SfxManager.play("buy")
-                tvWarning.visibility = View.GONE
-            }
-        }
-
-        btnBuyRandomSkill.setOnClickListener {
-            val canBuy = gameViewModel.playerBuyRandomSkill()
-            if (!canBuy) {
-                SfxManager.play("decline")
-                tvWarning.visibility = View.VISIBLE
-            } else {
-                SfxManager.play("buy")
-                tvWarning.visibility = View.GONE
-                showGachaSkillDialog()
-            }
-        }
-
-        btnClose.setOnClickListener {
+        binding.btnCloseStore.setOnClickListener {
             SfxManager.play("button")
             dismiss()
         }
     }
-    private fun showGachaSkillDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_gacha_skills, null)
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setView(dialogView)
-        val dialog = builder.create()
-
-        val tvTitle = dialogView.findViewById<TextView>(R.id.tvGachaSkillTitle)
-        val tvResult = dialogView.findViewById<TextView>(R.id.tvGachaSkillResult)
-        val btnOk = dialogView.findViewById<Button>(R.id.btnGachaSkillOk)
-
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.show()
-
-        lifecycleScope.launch {
-            val startTime = System.currentTimeMillis()
-            val allSkills = SkillRegistry.allSkills()
-            var rollingSkill: Skill
-
-            // Efek rolling 3 detik
-            while (System.currentTimeMillis() - startTime < 3000) {
-                rollingSkill = allSkills.random()
-                tvTitle.text = "Rolling..."
-                tvResult.text = "Skill: ${rollingSkill.name}"
-                delay(100)
+    private fun setupStoreItems() {
+        val itemsForSale = listOf(
+            StoreItem("Health Potion", 20, R.drawable.ic_health_potion) {
+                handlePurchase { gameViewModel.playerAddItem(HealthPotion()) }
+            },
+            StoreItem("Mana Potion", 30, R.drawable.ic_mana_potion) {
+                handlePurchase { gameViewModel.playerAddItem(ManaPotion()) }
+            },
+            StoreItem("Random Skill", 100, R.drawable.ic_random_skill) {
+                handleSkillPurchase()
             }
+        )
 
-            // Hasil akhir
-            val player = gameViewModel.player.value ?: return@launch
-            val finalSkill = SkillRegistry.randomSkillExcluding(player.skills)
-                ?: allSkills.random() // fallback jika semua sudah punya
-
-            // Tambahkan skill ke player
-            gameViewModel.grantSkill(finalSkill)
-
-            tvTitle.text = "You Got!"
-            tvResult.text = "Skill: ${finalSkill.name}"
-
-            SfxManager.play("gacha_success")
-
-            btnOk.visibility = View.VISIBLE
-            btnOk.setOnClickListener {
-                dialog.dismiss()
-            }
+        binding.rvStoreItems.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = StoreAdapter(itemsForSale)
         }
     }
+
+    private fun handlePurchase(purchaseAction: () -> Boolean) {
+        if (isProcessingPurchase) return
+        isProcessingPurchase = true
+
+        val success = purchaseAction()
+        if (!success) {
+            SfxManager.play("decline")
+            binding.tvWarning.visibility = View.VISIBLE
+        } else {
+            SfxManager.play("buy")
+            binding.tvWarning.visibility = View.GONE
+        }
+        isProcessingPurchase = false
+    }
+
+    // --- MODIFIED THIS FUNCTION ---
+    private fun handleSkillPurchase() {
+        if (isProcessingPurchase) return
+        isProcessingPurchase = true
+
+        val purchasedSkill = gameViewModel.playerBuyRandomSkill()
+
+        if (purchasedSkill == null) {
+            SfxManager.play("decline")
+            binding.tvWarning.text = "Cannot buy skill!"
+            binding.tvWarning.visibility = View.VISIBLE
+        } else {
+            SfxManager.play("buy") // Or a more special sound like "gacha_success"
+            binding.tvWarning.visibility = View.GONE
+
+            // Show a Toast message to inform the player what they got
+            val message = "You learned: ${purchasedSkill.name}!"
+            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+        }
+        isProcessingPurchase = false
+    }
+
+    // --- REMOVED THE showGachaSkillDialog FUNCTION ---
+
+    override fun onResume() {
+        super.onResume()
+        isProcessingPurchase = false
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
-
-

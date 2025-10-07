@@ -6,66 +6,73 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.sgdc.roguelike.databinding.DialogItemBinding
 import com.sgdc.roguelike.domain.bgm.SfxManager
+import com.sgdc.roguelike.ui.adapter.ItemAdapter
 import com.sgdc.roguelike.ui.viewmodel.GameViewModel
-import com.sgdc.roguelike.R
-import com.sgdc.roguelike.domain.item.HealthPotion
-import com.sgdc.roguelike.domain.item.ManaPotion
 
 class ItemDialogFragment : DialogFragment() {
 
     private val gameViewModel: GameViewModel by activityViewModels()
+    private var _binding: DialogItemBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onStart() {
+        super.onStart()
+        // This tells the dialog's window to match the screen's width
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        return inflater.inflate(R.layout.dialog_item, container, false)
+        _binding = DialogItemBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemContainer = view.findViewById<LinearLayout>(R.id.itemContainer)
-        val closeBtn = view.findViewById<Button>(R.id.btnCloseItem)
-
-        gameViewModel.player.observe(viewLifecycleOwner) { player ->
-            itemContainer.removeAllViews()
-
-            player.items.filter { it.item is ManaPotion }.forEach { inventoryItem ->
-                val btn = Button(requireContext()).apply {
-                    text = "${inventoryItem.item.name} x${inventoryItem.amount}"
-                    setOnClickListener {
-                        gameViewModel.playerUseItem(inventoryItem.item)
-                        SfxManager.play("button")
-                        dismiss()
-                    }
-                }
-                itemContainer.addView(btn)
-            }
-            player.items.filter { it.item is HealthPotion }.forEach { inventoryItem ->
-                val btn = Button(requireContext()).apply {
-                    text = "${inventoryItem.item.name} x${inventoryItem.amount}"
-                    setOnClickListener {
-                        gameViewModel.playerUseItem(inventoryItem.item)
-                        SfxManager.play("button")
-                        dismiss()
-                    }
-                }
-                itemContainer.addView(btn)
-            }
+        // 1. Create the adapter
+        val itemAdapter = ItemAdapter { inventoryItem ->
+            // This is the click handler for each item
+            gameViewModel.playerUseItem(inventoryItem.item)
+            SfxManager.play("button")
+            dismiss()
         }
 
-        closeBtn.setOnClickListener {
+        // 2. Setup the RecyclerView
+        binding.rvItems.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = itemAdapter
+        }
+
+        // 3. Observe player data and update the adapter
+        gameViewModel.player.observe(viewLifecycleOwner) { player ->
+            // Handle empty state
+            binding.tvNoItems.isVisible = player.items.isEmpty()
+            binding.rvItems.isVisible = player.items.isNotEmpty()
+
+            // Submit the list to the adapter for automatic updates
+            itemAdapter.submitList(player.items)
+        }
+
+        binding.btnCloseItem.setOnClickListener {
             SfxManager.play("button")
             dismiss()
         }
     }
-}
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

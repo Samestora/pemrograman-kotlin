@@ -5,17 +5,16 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@drawable/dialog_bg"
+              android:gravity="center_horizontal"
               android:orientation="vertical"
-              android:padding="24dp"
-              android:gravity="center_horizontal">
+              android:padding="24dp">
 
-    <!-- Health / Mana -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginBottom="8dp">
+        android:weightSum="2">
 
         <TextView
             android:id="@+id/tvPlayerHealth"
@@ -39,7 +38,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Class -->
     <TextView
         android:id="@+id/tvPlayerClass"
         android:layout_width="wrap_content"
@@ -49,23 +47,21 @@
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
-    <!-- Player Image -->
     <ImageView
         android:id="@+id/ivVetruvian"
         android:layout_width="match_parent"
         android:layout_height="220dp"
+        android:layout_marginBottom="8dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/vetruvian"
-        android:layout_marginBottom="8dp" />
+        app:srcCompat="@drawable/vetruvian" />
 
-    <!-- Stats Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_marginBottom="4dp">
+        android:weightSum="3">
 
         <TextView
             android:layout_width="0dp"
@@ -95,13 +91,12 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <!-- Stats Values -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_marginBottom="12dp">
+        android:weightSum="3">
 
         <TextView
             android:id="@+id/tvPlayerAttack"
@@ -134,52 +129,39 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <!-- Skill Section -->
     <TextView
         android:id="@+id/tvSkillHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:gravity="center"
         android:text="Skills"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="6dp" />
+        android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/layoutPlayerSkills"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvNoSkills"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="12dp">
+        android:layout_marginBottom="4dp"
+        android:text="No skills learned."
+        android:textColor="#AAAAAA"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
-        <!-- Placeholder text (will be replaced in code) -->
-        <TextView
-            android:id="@+id/tvNoSkills"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No skills learned."
-            android:textColor="#AAAAAA"
-            android:textSize="16sp"
-            android:layout_marginBottom="4dp" />
-
-        <Button
-            android:id="@+id/btnViewSkills"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Skills Description"
-            android:backgroundTint="#444"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-    <!-- Close Button -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlayerSkills"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginBottom="12dp"/>
     <Button
         android:id="@+id/btnCloseStats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Close"
         android:layout_marginTop="8dp"
         android:backgroundTint="#555"
+        android:text="Close"
         android:textColor="@android:color/white" />
+
 </LinearLayout>

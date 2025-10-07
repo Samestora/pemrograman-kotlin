@@ -5,21 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.sgdc.roguelike.R
-import com.sgdc.roguelike.ui.viewmodel.GameViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sgdc.roguelike.databinding.DialogPlayerStatsBinding
+import com.sgdc.roguelike.ui.adapter.SkillAdapter // <-- Import the new adapter
+import com.sgdc.roguelike.ui.viewmodel.GameViewModel
 
 class PlayerStatsDialogFragment : DialogFragment() {
 
     private val gameViewModel: GameViewModel by activityViewModels()
 
-    // This is the key property for View Binding in Fragments
+    // View Binding property
     private var _binding: DialogPlayerStatsBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -28,9 +26,9 @@ class PlayerStatsDialogFragment : DialogFragment() {
         return dialog
     }
 
-    // The code to fix the shrinking dialog
     override fun onStart() {
         super.onStart()
+        // Fix for the dialog shrinking
         dialog?.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -42,7 +40,6 @@ class PlayerStatsDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate and return the binding root
         _binding = DialogPlayerStatsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -53,6 +50,7 @@ class PlayerStatsDialogFragment : DialogFragment() {
         binding.btnCloseStats.setOnClickListener { dismiss() }
 
         gameViewModel.player.observe(viewLifecycleOwner) { player ->
+            // This part remains the same
             binding.tvPlayerClass.text = player.name
             binding.tvPlayerHealth.text = "${player.health} / ${player.maxHealth}"
             binding.tvPlayerMana.text = "${player.mana} / ${player.maxMana}"
@@ -60,38 +58,39 @@ class PlayerStatsDialogFragment : DialogFragment() {
             binding.tvPlayerDefense.text = player.def.toString()
             binding.tvPlayerGold.text = player.money.toString()
 
-            // Update skill section
-            val skillContainer = binding.layoutPlayerSkills
-            val noSkillText = binding.tvNoSkills
-            skillContainer.removeAllViews()
-
+            // --- REFACTORED SKILL SECTION using RecyclerView ---
             if (player.skills.isNotEmpty()) {
-                noSkillText.visibility = View.GONE
-                player.skills.forEach { skill ->
-                    val tvSkill = TextView(requireContext()).apply {
-                        text = "• ${skill.name}"
-                        setTextColor(resources.getColor(android.R.color.white))
-                        textSize = 16f
-                        setPadding(0, 6, 0, 6)
-                        setOnClickListener {
-                            SkillDescriptionDialogFragment.newInstance(
-                                skill.name,
-                                skill.manaCost,
-                                skill.description
-                            ).show(parentFragmentManager, "SkillDescriptionDialog")
-                        }
-                    }
-                    skillContainer.addView(tvSkill)
+                // Show the list and hide the "no skills" text
+                binding.tvNoSkills.visibility = View.GONE
+                binding.rvPlayerSkills.visibility = View.VISIBLE
+
+                // 1. Create the adapter with the player's skills and the click handler
+                val skillAdapter = SkillAdapter(player.skills) { skill ->
+                    // This lambda function is executed when a skill is clicked
+                    SkillDescriptionDialogFragment.newInstance(
+                        skill.name,
+                        skill.manaCost,
+                        skill.description
+                    ).show(parentFragmentManager, "SkillDescriptionDialog")
                 }
+
+                // 2. Set the adapter on the RecyclerView
+                binding.rvPlayerSkills.adapter = skillAdapter
+
+                // 3. Set a LayoutManager (required for RecyclerView to position items)
+                binding.rvPlayerSkills.layoutManager = LinearLayoutManager(requireContext())
+
             } else {
-                noSkillText.visibility = View.VISIBLE
+                // If there are no skills, hide the list and show the "no skills" text
+                binding.tvNoSkills.visibility = View.VISIBLE
+                binding.rvPlayerSkills.visibility = View.GONE
             }
         }
     }
 
-    // Clean up the binding reference when the view is destroyed to avoid memory leaks
     override fun onDestroyView() {
         super.onDestroyView()
+        // Clean up the binding reference to avoid memory leaks
         _binding = null
     }
 }

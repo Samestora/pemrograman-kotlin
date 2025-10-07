@@ -17,6 +17,15 @@ object SkillRegistry {
 
     fun allSkills(): List<Skill> = skills.map { it.invoke() }
 
+    fun allSkillsExcluding(owned: List<Skill>): List<Skill> {
+        // Get the class types of skills the player already owns for efficient lookup.
+        val ownedSkillTypes = owned.map { it::class }.toSet()
+
+        // Create all possible skills and then filter them.
+        return skills.map { it.invoke() }
+            .filter { it::class !in ownedSkillTypes }
+    }
+
     fun randomSkillExcluding(owned: List<Skill>): Skill? {
         val ownedNames = owned.map { it::class } // track by type
         val available = skills
