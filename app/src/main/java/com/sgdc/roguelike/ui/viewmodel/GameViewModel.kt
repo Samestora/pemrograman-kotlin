@@ -254,8 +254,8 @@ class GameViewModel : ViewModel() {
 
     fun playerBuyRandomSkill(): Skill? {
         val player = _player.value ?: return null
-        if (player.money >= 100) {
-            player.money -= 100
+        if (player.money >= 0) {
+            player.money -= 0
             val skill = grantRandomSkill()
             _player.value = player
             return skill

@@ -122,3 +122,165 @@ class FlameBurst : Effect {
         }, 750)
     }
 }
+
+class IceSpike : Effect {
+    override fun play(targetView: View) {
+        val context = App.context
+        val imageView = ImageView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                targetView.width,
+                targetView.height
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+        }
+
+        val loader = ResourceStreamLoader(context, R.raw.ice_spike)
+        val drawable = GifDrawable(loader)
+        imageView.setImageDrawable(drawable)
+
+        val parent = targetView.parent as? FrameLayout
+        parent?.addView(imageView)
+
+        drawable.start()
+        imageView.postDelayed({
+            drawable.stop()
+            parent?.removeView(imageView)
+        }, 750)
+    }
+}
+
+class ThunderStrike : Effect {
+    override fun play(targetView: View) {
+        val context = App.context
+        val imageView = ImageView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                targetView.width,
+                targetView.height
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+        }
+
+        val loader = ResourceStreamLoader(context, R.raw.thunder_strike_effect)
+        val drawable = GifDrawable(loader)
+        imageView.setImageDrawable(drawable)
+
+        val parent = targetView.parent as? FrameLayout
+        parent?.addView(imageView)
+
+        drawable.start()
+        imageView.postDelayed({
+            drawable.stop()
+            parent?.removeView(imageView)
+        }, 750)
+    }
+}
+
+class DrainLife : Effect {
+    override fun play(targetView: View) {
+        val context = App.context
+        val imageView = ImageView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                targetView.width,
+                targetView.height
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+        }
+
+        val loader = ResourceStreamLoader(context, R.raw.drain_life_effect)
+        val drawable = GifDrawable(loader)
+        imageView.setImageDrawable(drawable)
+
+        val parent = targetView.parent as? FrameLayout
+        parent?.addView(imageView)
+
+        drawable.start()
+        imageView.postDelayed({
+            drawable.stop()
+            parent?.removeView(imageView)
+        }, 750)
+    }
+}
+
+class Bite : Effect {
+    override fun play(targetView: View) {
+        val context = App.context
+        val imageView = ImageView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                targetView.width,
+                targetView.height
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+        }
+
+        val loader = ResourceStreamLoader(context, R.raw.bite_effect)
+        val drawable = GifDrawable(loader)
+        imageView.setImageDrawable(drawable)
+
+        val parent = targetView.parent as? FrameLayout
+        parent?.addView(imageView)
+
+        drawable.start()
+        imageView.postDelayed({
+            drawable.stop()
+            parent?.removeView(imageView)
+        }, 750)
+    }
+}
+
+class Slash : Effect {
+    override fun play(targetView: View) {
+        val context = App.context
+        val imageView = ImageView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                targetView.width,
+                targetView.height
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+        }
+
+        val loader = ResourceStreamLoader(context, R.raw.slash_effect)
+        val drawable = GifDrawable(loader)
+        imageView.setImageDrawable(drawable)
+
+        val parent = targetView.parent as? FrameLayout
+        parent?.addView(imageView)
+
+        drawable.start()
+        imageView.postDelayed({
+            drawable.stop()
+            parent?.removeView(imageView)
+        }, 750)
+    }
+}
+
+class Thrust : Effect {
+    override fun play(targetView: View) {
+        val context = App.context
+        val imageView = ImageView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                targetView.width,
+                targetView.height
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+        }
+
+        val loader = ResourceStreamLoader(context, R.raw.thrust_effect)
+        val drawable = GifDrawable(loader)
+        imageView.setImageDrawable(drawable)
+
+        val parent = targetView.parent as? FrameLayout
+        parent?.addView(imageView)
+
+        drawable.start()
+        imageView.postDelayed({
+            drawable.stop()
+            parent?.removeView(imageView)
+        }, 750)
+    }
+}

@@ -141,6 +141,7 @@
 
             <!-- Tombol Attack -->
             <LinearLayout
+                android:id="@+id/attackButton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -148,7 +149,8 @@
                 android:focusable="true"
                 android:background="@drawable/bg_action_btn"
                 android:padding="8dp"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="12dp"
+                android:contextClickable="true">
 
                 <ImageView
                     android:id="@+id/attackIcon"
@@ -169,6 +171,7 @@
 
             <!-- Tombol Defend -->
             <LinearLayout
+                android:id="@+id/defenseButton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -176,7 +179,8 @@
                 android:focusable="true"
                 android:background="@drawable/bg_action_btn"
                 android:padding="8dp"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="12dp"
+                android:contextClickable="true">
 
                 <ImageView
                     android:id="@+id/defendIcon"
@@ -197,13 +201,16 @@
 
             <!-- Tombol Skills -->
             <LinearLayout
+                android:id="@+id/openSkillButton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="@drawable/bg_action_btn"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:layout_marginBottom="12dp"
+                android:contextClickable="true">
 
                 <ImageView
                     android:id="@+id/skillIcon"
@@ -221,7 +228,6 @@
                     android:textStyle="bold"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
-
         </LinearLayout>
 
 

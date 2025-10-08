@@ -6,6 +6,13 @@ object EffectFactory {
             "fireball" -> FireballEffect()
             "heal"-> HealEffect()
             "attack" -> AttackEffect()
+            "flame burst" -> FlameBurst()
+            "bite" -> Bite()
+            "drain life" -> DrainLife()
+            "thunder strike" -> ThunderStrike()
+            "ice spike" -> IceSpike()
+            "slash" -> Slash()
+            "thrust" -> Thrust()
             else -> null
         }
     }

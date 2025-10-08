@@ -29,11 +29,11 @@ class BattleFragment : Fragment() {
 
     private val gameViewModel: GameViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-    private lateinit var openSkillButton: Button
+    private lateinit var openSkillButton: LinearLayout
     private lateinit var battleMessage: TextView
     private lateinit var enemyHealthBar: ProgressBar
-    private lateinit var attackButton: Button
-    private lateinit var defenseButton: Button
+    private lateinit var attackButton: LinearLayout
+    private lateinit var defenseButton: LinearLayout
     private lateinit var nextButton: Button
     private lateinit var enemyName: TextView
     private lateinit var enemySprite: ImageView
