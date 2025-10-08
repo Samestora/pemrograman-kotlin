@@ -95,3 +95,30 @@ class HealEffect : Effect {
         }, 750)
     }
 }
+
+class FlameBurst : Effect {
+    override fun play(targetView: View) {
+        val context = App.context
+        val imageView = ImageView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                targetView.width,
+                targetView.height
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+        }
+
+        val loader = ResourceStreamLoader(context, R.raw.flame_burst_effect)
+        val drawable = GifDrawable(loader)
+        imageView.setImageDrawable(drawable)
+
+        val parent = targetView.parent as? FrameLayout
+        parent?.addView(imageView)
+
+        drawable.start()
+        imageView.postDelayed({
+            drawable.stop()
+            parent?.removeView(imageView)
+        }, 750)
+    }
+}
