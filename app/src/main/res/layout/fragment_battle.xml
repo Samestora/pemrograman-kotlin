@@ -135,31 +135,95 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
 
-            <Button
-                android:id="@+id/attackButton"
-                style="@android:style/Widget.Button"
+            <!-- Tombol Attack -->
+            <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Attack" />
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/bg_action_btn"
+                android:padding="8dp"
+                android:layout_marginBottom="12dp">
 
-            <Button
-                android:id="@+id/defenseButton"
-                style="@android:style/Widget.Button"
+                <ImageView
+                    android:id="@+id/attackIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ichunter"
+                    android:contentDescription="Attack Icon" />
+
+                <TextView
+                    android:id="@+id/attackText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attack"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Tombol Defend -->
+            <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Defend" />
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/bg_action_btn"
+                android:padding="8dp"
+                android:layout_marginBottom="12dp">
 
-            <Button
-                android:id="@+id/openSkillButton"
-                style="@android:style/Widget.Button"
+                <ImageView
+                    android:id="@+id/defendIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/iccontemplative"
+                    android:contentDescription="Defend Icon" />
+
+                <TextView
+                    android:id="@+id/defendText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Defend"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Tombol Skills -->
+            <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Skills" />
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/bg_action_btn"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/skillIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icresearch"
+                    android:contentDescription="Skill Icon" />
+
+                <TextView
+                    android:id="@+id/skillText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skills"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
         </LinearLayout>
+
 
         <!-- Spacer -->
         <Space
